@@ -1,0 +1,368 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{09BC5395-931B-411A-9C60-43BE98099236}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LCardAnalizator</RootNamespace>
+    <AssemblyName>LCardAnalizator</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>D:\publishapp\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>widget.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>97E200D878118F29D868DD2A893227ECF4880089</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>WindowsFormsGraphickOpenGL_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Tao.FreeGlut, Version=2.4.0.2, Culture=neutral, PublicKeyToken=6e602a6ad6c0d06d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Tao\bin\Tao.FreeGlut.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Tao.OpenGl, Version=0.0.0.0, Culture=neutral, PublicKeyToken=1ca010269a4501ef">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Tao\bin\Tao.OpenGl.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Tao.Platform.Windows, Version=1.0.0.3, Culture=neutral, PublicKeyToken=701104b2da67a104">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Tao\bin\Tao.Platform.Windows.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ZedGraph">
+      <HintPath>..\zedgraph_dll_v5.1.5\ZedGraph.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="statesWork.cs" />
+    <Compile Include="calculation\ClassCalc.cs" />
+    <Compile Include="graphicks\ClassOpenGLGraphick2D.cs" />
+    <Compile Include="calculation\ClassRecord.cs" />
+    <Compile Include="FormMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMain.Designer.cs">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormProgressBar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormProgressBar.Designer.cs">
+      <DependentUpon>FormProgressBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormMain.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormProgressBar.resx">
+      <DependentUpon>FormProgressBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="WindowsFormsGraphickOpenGL_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Explorer Tree\WindowsExplorer.csproj">
+      <Project>{0851BAC5-A29F-4C64-A7BC-A7233E12982E}</Project>
+      <Name>WindowsExplorer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RtfWriter\RtfWriter.csproj">
+      <Project>{591BCEB5-6B6F-4368-BE6C-F89F668F7DCB}</Project>
+      <Name>RtfWriter</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="freeglut.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\chart.png" />
+    <Content Include="images\minus.png" />
+    <Content Include="images\play.png" />
+    <Content Include="images\plus.png" />
+    <Content Include="images\refresh.png" />
+    <Content Include="images\save.png" />
+    <Content Include="images\zoom.png" />
+    <Content Include="images\zoom_in.png" />
+    <Content Include="images\zoom_out.png" />
+    <Content Include="Tao\bin\Tao.Cg.dll" />
+    <Content Include="Tao\bin\Tao.Cg.xml" />
+    <Content Include="Tao\bin\Tao.DevIl.dll" />
+    <Content Include="Tao\bin\Tao.DevIl.xml" />
+    <Content Include="Tao\bin\Tao.FFmpeg.dll" />
+    <Content Include="Tao\bin\Tao.FFmpeg.xml" />
+    <Resource Include="Tao\bin\Tao.FreeGlut.dll" />
+    <None Include="Tao\bin\Tao.FreeGlut.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="Tao\bin\Tao.FreeType.dll" />
+    <Content Include="Tao\bin\Tao.FreeType.xml" />
+    <Content Include="Tao\bin\Tao.Glfw.dll" />
+    <Content Include="Tao\bin\Tao.Glfw.xml" />
+    <Content Include="Tao\bin\Tao.Lua.dll" />
+    <Content Include="Tao\bin\Tao.Lua.xml" />
+    <Content Include="Tao\bin\Tao.Ode.dll" />
+    <Content Include="Tao\bin\Tao.Ode.xml" />
+    <Content Include="Tao\bin\Tao.OpenAl.dll" />
+    <Content Include="Tao\bin\Tao.OpenAl.xml" />
+    <Content Include="Tao\bin\Tao.OpenGl.dll" />
+    <Content Include="Tao\bin\Tao.OpenGl.xml" />
+    <Content Include="Tao\bin\Tao.PhysFs.dll" />
+    <Content Include="Tao\bin\Tao.PhysFs.xml" />
+    <Content Include="Tao\bin\Tao.Platform.Windows.dll" />
+    <Content Include="Tao\bin\Tao.Platform.Windows.xml" />
+    <Content Include="Tao\bin\Tao.Platform.X11.dll" />
+    <Content Include="Tao\bin\Tao.Platform.X11.xml" />
+    <Content Include="Tao\bin\Tao.Sdl.dll" />
+    <Content Include="Tao\bin\Tao.Sdl.xml" />
+    <Content Include="Tao\lib\alut.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tao\lib\avcodec-51.dll" />
+    <Content Include="Tao\lib\avformat-51.dll" />
+    <Content Include="Tao\lib\avutil-49.dll" />
+    <Content Include="Tao\lib\cg.dll" />
+    <Content Include="Tao\lib\cgGL.dll" />
+    <Content Include="Tao\lib\DevIL.dll" />
+    <Content Include="Tao\lib\freeglut.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tao\lib\freetype6.dll" />
+    <Content Include="Tao\lib\glfw.dll" />
+    <Content Include="Tao\lib\ILU.dll" />
+    <Content Include="Tao\lib\ILUT.dll" />
+    <Content Include="Tao\lib\jpeg.dll" />
+    <Content Include="Tao\lib\libfreetype-6.dll" />
+    <Content Include="Tao\lib\libogg-0.dll" />
+    <Content Include="Tao\lib\libpng12-0.dll" />
+    <Content Include="Tao\lib\libpng12.dll" />
+    <Content Include="Tao\lib\libtiff-3.dll" />
+    <Content Include="Tao\lib\libtiff.dll" />
+    <Content Include="Tao\lib\libvorbis-0.dll" />
+    <Content Include="Tao\lib\libvorbisfile-3.dll" />
+    <Content Include="Tao\lib\lua5.1.dll" />
+    <Content Include="Tao\lib\lua51.dll" />
+    <Content Include="Tao\lib\ode.dll" />
+    <Content Include="Tao\lib\OpenAL32.dll" />
+    <Content Include="Tao\lib\physfs.dll" />
+    <Content Include="Tao\lib\pthreadGC2.dll" />
+    <Content Include="Tao\lib\SDL.dll" />
+    <Content Include="Tao\lib\SDL_gfx.dll" />
+    <Content Include="Tao\lib\SDL_image.dll" />
+    <Content Include="Tao\lib\SDL_mixer.dll" />
+    <Content Include="Tao\lib\SDL_net.dll" />
+    <Content Include="Tao\lib\SDL_ttf.dll" />
+    <Content Include="Tao\lib\smpeg.dll" />
+    <Content Include="Tao\lib\swscale-0.dll" />
+    <Content Include="Tao\lib\wrap_oal.dll" />
+    <Content Include="Tao\lib\zlib1.dll" />
+    <Content Include="widget.ico" />
+    <Content Include="zedgraph_dll_v5.1.5\de\ZedGraph.resources.dll" />
+    <Content Include="zedgraph_dll_v5.1.5\es\ZedGraph.resources.dll" />
+    <Content Include="zedgraph_dll_v5.1.5\fr\ZedGraph.resources.dll" />
+    <Content Include="zedgraph_dll_v5.1.5\hu\ZedGraph.resources.dll" />
+    <Content Include="zedgraph_dll_v5.1.5\it\ZedGraph.resources.dll" />
+    <Content Include="zedgraph_dll_v5.1.5\ja\ZedGraph.resources.dll" />
+    <Content Include="zedgraph_dll_v5.1.5\pt\ZedGraph.resources.dll" />
+    <Content Include="zedgraph_dll_v5.1.5\ru\ZedGraph.resources.dll" />
+    <Content Include="zedgraph_dll_v5.1.5\sk\ZedGraph.resources.dll" />
+    <Content Include="zedgraph_dll_v5.1.5\sv\ZedGraph.resources.dll" />
+    <Content Include="zedgraph_dll_v5.1.5\tr\ZedGraph.resources.dll" />
+    <Content Include="zedgraph_dll_v5.1.5\ZedGraph.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zedgraph_dll_v5.1.5\ZedGraph.Web.dll" />
+    <Content Include="zedgraph_dll_v5.1.5\ZedGraph.Web.XML" />
+    <Content Include="zedgraph_dll_v5.1.5\ZedGraph.XML">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zedgraph_dll_v5.1.5\zh-cn\ZedGraph.resources.dll" />
+    <Content Include="zedgraph_dll_v5.1.5\zh-tw\ZedGraph.resources.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>5</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Word">
+      <Guid>{00020905-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>8</VersionMajor>
+      <VersionMinor>5</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <PublishFile Include="LCardAnalizator.pdb">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+    <PublishFile Include="RtfWriter.pdb">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+    <PublishFile Include="Tao.OpenGl">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Tao.Platform.Windows">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
