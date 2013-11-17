@@ -24,6 +24,7 @@ using Microsoft.Office.Interop.Word;
 using System.Xml;
 using System.Drawing.Drawing2D;
 using System.Diagnostics;
+using LCardAnalizator.graphicks;
 
 
 namespace WindowsFormsGraphickOpenGL
@@ -38,7 +39,7 @@ namespace WindowsFormsGraphickOpenGL
         ClassOpenGLGraphick2D cl2d=new ClassOpenGLGraphick2D();
         ClassCalc calc_record;
         string home_directory = @"";
-
+        int TypeAlgorithmFindingPeriods = 0;
         static long state = 0;
 
         FormProgressBar progressForm = null;
@@ -64,13 +65,6 @@ namespace WindowsFormsGraphickOpenGL
             Glut.glutInit();
             Glut.glutInitDisplayMode(Glut.GLUT_RGB | Glut.GLUT_DOUBLE | Glut.GLUT_DEPTH  );
 
-            bw = new BackgroundWorker();
-            bw.WorkerReportsProgress = true;
-            bw.WorkerSupportsCancellation = true;
-            bw.DoWork += bw_DoWork;
-            bw.ProgressChanged += bw_ProgressChanged;
-            bw.RunWorkerCompleted += bw_RunWorkerCompleted;
-            progressForm = new FormProgressBar(ref bw);
         }
 
 
@@ -110,6 +104,8 @@ namespace WindowsFormsGraphickOpenGL
         int split_main;
         int width_split_main;
         int TypeSmooth=0;
+
+        #region Save and Load Parametrs
 
         void LoadParametrs()
         {
@@ -259,7 +255,11 @@ namespace WindowsFormsGraphickOpenGL
                     number_zub = Convert.ToInt32(sfile);
 
                     //toolStripComboBoxSmooth.SelectedIndex = 0;
-                    
+
+                    toolStripComboBoxSelectTypeSeach.SelectedIndex = 0;
+
+
+
                     fconfig.Close();
                     return;
                 }
@@ -337,8 +337,11 @@ namespace WindowsFormsGraphickOpenGL
             { }
         }
 
+        #endregion
+
         int old_pos=-1;
 
+        #region OpenGl graphick Functions
         void ClearDrawArea()
         {
             // очитка окна 
@@ -419,6 +422,9 @@ namespace WindowsFormsGraphickOpenGL
             }
         }
 
+        #endregion
+
+        #region File List and Tree functions
         private void mnuSA_Click(object sender, EventArgs e)
         {
             //строка адреса
@@ -613,94 +619,44 @@ namespace WindowsFormsGraphickOpenGL
             dataGridViewFiles.AllowUserToAddRows = false;
         }
 
-        protected bool DrawGraph(string path)
-        {
-            lock (record)
-            {
-                if (record.ReadInCommonFormat(path))
-                {
-                    flag_record = true;
-                    flag_graph = true;
-                }
-                else
-                {
-                    flag_record = false;
-                }
-            }
-            if (bw.CancellationPending == true) { this.Enabled = true; return false; }
-            bw.ReportProgress(statesWork.startCalc);
-
-            return true;
-        }
-
-        string dir_file;
-        string path_file;
-        string name_file;
-
-        protected bool ShowGraph()
-        {
-            if (tabControlMain.TabPages.Count > 1)
-            {
-                removePages();
-            }
-
-            flag_record = false;
-            if (vrecords.Count > 0)
-            {
-
-                name_file = dataGridViewFiles.SelectedCells[0].Value.ToString();
-                dir_file = explorerTreeMain.SelectedPath;
-                path_file = dir_file + "\\" + name_file;
-                bw.ReportProgress(statesWork.startRead);
-                //progressForm.setProgress(10, "Ввод данных и построение графика");
-                if (DrawGraph(path_file))
-                {
-                    my_scale = 1;
-                    hScrollBarGraph.Maximum = 0;
-                    flag_record = true;
-                }
-                else
-                {
-                    if (bw.CancellationPending == true) { this.Enabled = true; return false; }
-                    flag_record = false;
-                    MessageBox.Show("Файл повреждён или отстутсвует");
-                }
-            }
-            else
-            {
-                flag_record = false;
-                MessageBox.Show("Не выбрано ни одного файла");
-            }
-            return true;
-        }
-
-        private void menuShowGrap_Click(object sender, EventArgs e)
-        {
-            progressForm = new FormProgressBar(ref bw);
-
-            progressForm.Show();
-            bw.DoWork -= bw_DoWork;
-            bw.DoWork -= bw_DoWorkRecalc;
-            bw.DoWork += bw_DoWorkShowGraph;
-            bw.RunWorkerAsync(null);
-        }
-
-        private void toolStripButtonShowGraph_Click(object sender, EventArgs e)
-        {
-            progressForm = new FormProgressBar(ref bw);
-
-            progressForm.Show();
-            bw.DoWork -= bw_DoWork;
-            bw.DoWork -= bw_DoWorkRecalc;
-            bw.DoWork += bw_DoWorkShowGraph;
-            bw.RunWorkerAsync(null);
-        }
-
         private void dataGridViewFiles_SelectionChanged(object sender, EventArgs e)
         {
             flag_record = false;
             flag_calc = false;
+            if (vrecords.Count > 0)
+            {
+                int index = dataGridViewFiles.CurrentCell.RowIndex;
+                if (vrecords[index].NumberOfChannels == 1)
+                {
+                    toolStripComboBoxSelectTypeSeach.SelectedIndex = 0;
+                    toolStripComboBoxSelectTypeSeach.Enabled = false;
+                }
+                if (vrecords[index].NumberOfChannels > 1)
+                {
+                    toolStripComboBoxSelectTypeSeach.SelectedIndex = 1;
+                    toolStripComboBoxSelectTypeSeach.Enabled = true;
+                }
+            }
+            else
+            {
+                toolStripComboBoxSelectTypeSeach.SelectedIndex = 0;
+                toolStripComboBoxSelectTypeSeach.Enabled = false;
+            }
         }
+
+        #endregion
+
+        private void menuShowGrap_Click(object sender, EventArgs e)
+        {
+            ShowGrapAsync();
+        }
+
+        private void toolStripButtonShowGraph_Click(object sender, EventArgs e)
+        {
+            ShowGrapAsync();
+        }
+
+        
 
         private void toolStripButtonGraphZoomIn_Click(object sender, EventArgs e)
         {
@@ -778,7 +734,10 @@ namespace WindowsFormsGraphickOpenGL
             SaveGraph();
         }
 
+        #region Create Report
+
         public string[] column_name =  {"такт работа","такт выхлоп","такт всасывания","такт сжатие" };
+        string name_minum = @"Минимум";
         void CreateReport()
         {
             richTextBoxReport.Clear();
@@ -847,14 +806,23 @@ namespace WindowsFormsGraphickOpenGL
             img.Width = 640;
             img.Width = 480;
 
-            if (calc_record.max_loc != null && calc_record.min_loc != null)
+            if (calc_record.min_loc != null)
             {
                 par = doc.addParagraph();
                 par.DefaultCharFormat.Font = times;
                 par.Alignment = Align.Left;
                 par.DefaultCharFormat.FontSize = 15;
                 par.Text = "Циклы подачи";
-                table = doc.addTable(calc_record.t_min_loc.Length, 18);
+                
+
+                if (TypeAlgorithmFindingPeriods == 0)
+                    table = doc.addTable(calc_record.t_min_loc.Length, 18);
+                else
+                {
+                    table = doc.addTable(calc_record.t_min_loc.Length, 3);
+                    name_minum = @"Синхроимпульс";
+                }
+
                 table.Margins[Direction.Bottom] = 20;
                 table.DefaultCharFormat.FontSize = 8;
                 /// Step 3. (Optional) Set text alignment for each cell, row height, column width,
@@ -863,7 +831,7 @@ namespace WindowsFormsGraphickOpenGL
                 table.cell(0, 0).Width = 50;
                 table.cell(0, 0).Alignment = Align.Left;
                 table.cell(0, 0).AlignmentVertical = AlignVertical.Middle;
-                table.cell(0, 0).addParagraph().Text =@"Минимум";
+                table.cell(0, 0).addParagraph().Text = name_minum;
 
                 table.cell(0, 1).Width = 40;
                 table.cell(0, 1).Alignment = Align.Left;
@@ -876,21 +844,24 @@ namespace WindowsFormsGraphickOpenGL
                 table.cell(0, 2).addParagraph().Text = @"";
                 table.merge(0, 0,1, 3);
 
-                table.cell(0, 3).Width = 50;
-                table.cell(0, 3).Alignment = Align.Left;
-                table.cell(0, 3).AlignmentVertical = AlignVertical.Middle;
-                table.cell(0, 3).addParagraph().Text = @"Максимум";
+                if (TypeAlgorithmFindingPeriods == 0)
+                {
+                    table.cell(0, 3).Width = 50;
+                    table.cell(0, 3).Alignment = Align.Left;
+                    table.cell(0, 3).AlignmentVertical = AlignVertical.Middle;
+                    table.cell(0, 3).addParagraph().Text = @"Максимум";
 
-                table.cell(0, 4).Width = 40;
-                table.cell(0, 4).Alignment = Align.Left;
-                table.cell(0, 4).AlignmentVertical = AlignVertical.Middle;
-                table.cell(0, 4).addParagraph().Text = @"";
+                    table.cell(0, 4).Width = 40;
+                    table.cell(0, 4).Alignment = Align.Left;
+                    table.cell(0, 4).AlignmentVertical = AlignVertical.Middle;
+                    table.cell(0, 4).addParagraph().Text = @"";
 
-                table.cell(0, 5).Width = 70;
-                table.cell(0, 5).Alignment = Align.Left;
-                table.cell(0, 5).AlignmentVertical = AlignVertical.Middle;
-                table.cell(0, 5).addParagraph().Text = @"";
-                table.merge(0, 3, 1, 3);
+                    table.cell(0, 5).Width = 70;
+                    table.cell(0, 5).Alignment = Align.Left;
+                    table.cell(0, 5).AlignmentVertical = AlignVertical.Middle;
+                    table.cell(0, 5).addParagraph().Text = @"";
+                    table.merge(0, 3, 1, 3);
+                }
 
                 for (int j = 6; j < table.ColCount; j++)
                 {
@@ -986,6 +957,11 @@ namespace WindowsFormsGraphickOpenGL
                 }
                 table.setInnerBorder(DW.RtfWriter.BorderStyle.Dotted, 1f);
                 table.setOuterBorder(DW.RtfWriter.BorderStyle.Single, 1f);
+                par = doc.addParagraph();
+                if(TypeAlgorithmFindingPeriods == 0)
+                    par.Text = @"Поиск событий осуществлен по минимуму и максимуму.";
+                if (TypeAlgorithmFindingPeriods == 1)
+                    par.Text = @"Поиск событий осуществлен с использованием второго канала.";
             }
 
             if (SelectedIndexSmooth == 0)
@@ -1004,6 +980,8 @@ namespace WindowsFormsGraphickOpenGL
                 par = doc.addParagraph();
                 par.Text = @"Ширина окна сглаживания: " + gaussB.ToString();
             }
+
+            
 
             par = doc.addParagraph();
             par.Text =@"Расчёт произведён для файла: " + name_file;
@@ -1036,6 +1014,39 @@ namespace WindowsFormsGraphickOpenGL
             }
         }
 
+        #endregion
+
+        #region Create graphics
+
+        public void createDrawGraphCreateReport()
+        {
+            //вывод графиков
+            ZedGraphHelper.CreateGraph(ref zedGraphControlTimeAcceleration, ref calc_record.t_ac, "время, с", ref calc_record.ac, "ускорение, рад/c^2", calc_record.kol_ac, "", "");
+            ZedGraphHelper.CreateGraph(ref zedGraphControlSpeedAcceleration, ref calc_record.vu, "частота вращения, об/мин", ref calc_record.ac, "ускорение, рад/c^2", calc_record.kol_ac, "", "");
+            ZedGraphHelper.CreateGraph(ref zedGraphControlTimeSpeed, ref calc_record.t_vu, "время, сек", ref calc_record.vu, "частота вращения, об/мин", calc_record.kol_vu, "", "");
+            ZedGraphHelper.CreateGraph(ref zedGraphControlTimeSpeedAcc, ref calc_record.t_vu, "время, сек", ref calc_record.vu, "частота вращения, об/мин", calc_record.kol_vu, "", "");
+            ZedGraphHelper.CreateGraphPercent(ref zedGraphControlTimeSpeedAcc, ref calc_record.t_ac, "время, с", ref calc_record.vu, ref calc_record.ac, "Относительные ед., %", calc_record.kol_ac, "", "");
+
+            CreateReport();
+            if (tabControlMain.TabPages.Count < 2)
+            {
+                tabControlMain.TabPages.Add(tabPageTimeSpeed);
+                tabControlMain.TabPages.Add(tabPageTimeAcceleration);
+                tabControlMain.TabPages.Add(tabPageSpeedAcceleration);
+                tabControlMain.TabPages.Add(tabPageTimeSpeedAcc);
+                tabControlMain.TabPages.Add(tabPageReport);
+            }
+
+            flag_calc = true;
+            tabControlMain.SelectedIndex = 4;
+
+            my_scale = 1;
+            cl2d.Zoom_full();
+            hScrollBarGraph.Value = 0;
+            hScrollBarGraph.Maximum = 0;
+            OpenGlControlGraph.Invalidate();
+        }
+
         private static Image resizeImage(Image imgToResize, Size size)
         {
             int sourceWidth = imgToResize.Width;
@@ -1066,6 +1077,74 @@ namespace WindowsFormsGraphickOpenGL
             return (Image)b;
         }
 
+
+        
+        #endregion
+
+        #region Calculate With Bg Worker
+        BackgroundWorker bw;
+
+        protected bool DrawGraph(string path)
+        {
+            lock (record)
+            {
+                if (record.ReadInCommonFormat(path))
+                {
+                    flag_record = true;
+                    flag_graph = true;
+                }
+                else
+                {
+                    flag_record = false;
+                }
+            }
+            if (bw.CancellationPending == true) { this.Enabled = true; return false; }
+            bw.ReportProgress(statesWork.startCalc);
+
+            return true;
+        }
+
+        string dir_file;
+        string path_file;
+        string name_file;
+
+        protected bool ShowGraph()
+        {
+            if (tabControlMain.TabPages.Count > 1)
+            {
+                removePages();
+            }
+            flag_record = false;
+            flag_record = false;
+            if (vrecords.Count > 0)
+            {
+
+                name_file = dataGridViewFiles.SelectedCells[0].Value.ToString();
+                dir_file = explorerTreeMain.SelectedPath;
+                path_file = dir_file + "\\" + name_file;
+                bw.ReportProgress(statesWork.startRead);
+                //progressForm.setProgress(10, "Ввод данных и построение графика");
+                if (DrawGraph(path_file))
+                {
+                    my_scale = 1;
+                    hScrollBarGraph.Maximum = 0;
+                    flag_record = true;
+                }
+                else
+                {
+                    if (bw.CancellationPending == true) { this.Enabled = true; return false; }
+                    flag_record = false;
+                    MessageBox.Show("Файл повреждён или отстутсвует");
+                }
+            }
+            else
+            {
+                flag_record = false;
+                MessageBox.Show("Не выбрано ни одного файла");
+            }
+            return true;
+        }
+
         void Calculate()
         {
             flag_events = false;
@@ -1076,347 +1155,105 @@ namespace WindowsFormsGraphickOpenGL
                 //рассчёт 
                 calc_record = new ClassCalc();
                 //calc_record.Calculate(record);
-                gaussB = Convert.ToDouble(toolStripTextBoxWidthGauss.Text);
+                gaussB = gauss_width;
                 calc_record.Calculate2(record, with_diff_parm, OutStep, InStep, number_zub, gaussB, SelectedIndexSmooth);
                 if (bw.CancellationPending == true) { bw.ReportProgress(statesWork.stop); return; }
                 bw.ReportProgress(statesWork.finishCalc);
                 if (bw.CancellationPending == true) { bw.ReportProgress(statesWork.stop); return; }
                 //tabControlMain.Invalidate();
             }
-            
+
         }
 
-        public void createDrawGraphCreateReport()
+        double gauss_width = 0.01;
+        private void ReCalc(bool flagTimeSpeed, bool flagTimeAcceleration, bool flagSpeedAcceleration)
         {
-            //вывод графиков
-            CreateGraph(ref zedGraphControlTimeAcceleration, ref calc_record.t_ac, "время, с", ref calc_record.ac, "ускорение, рад/c^2", calc_record.kol_ac, "", "");
-            CreateGraph(ref zedGraphControlSpeedAcceleration, ref calc_record.vu, "частота вращения, об/мин", ref calc_record.ac, "ускорение, рад/c^2", calc_record.kol_ac, "", "");
-            CreateGraph(ref zedGraphControlTimeSpeed, ref calc_record.t_vu, "время, сек", ref calc_record.vu, "частота вращения, об/мин", calc_record.kol_vu, "", "");
-            CreateGraph(ref zedGraphControlTimeSpeedAcc, ref calc_record.t_vu, "время, сек", ref calc_record.vu, "частота вращения, об/мин", calc_record.kol_vu, "", "");
-            CreateGraphPercent(ref zedGraphControlTimeSpeedAcc, ref calc_record.t_ac, "время, с", ref calc_record.vu, ref calc_record.ac, "Относительные ед., %", calc_record.kol_ac, "", "");
-            //CreateGraphMaxMin(ref zedGraphControlTimeSpeed, ref calc_record.t_vu, "время, сек", ref calc_record.vu, "частота вращения, об/мин", calc_record.kol_vu, "", "",
-            //   calc_record.t_max_loc, calc_record.max_loc, calc_record.t_min_loc, calc_record.min_loc);
-            //CreateGraph(ref zedGraphControlSpeedAcceleration, ref record.time, "время, с", ref record.ch[0], "P, МПа", record.KadrsNumber, "", "");
-
-            CreateReport();
-            if (tabControlMain.TabPages.Count < 2)
+            if (!flag_calc && flag_record) Calculate();
+            if (flag_calc && flag_record)
             {
-                tabControlMain.TabPages.Add(tabPageTimeSpeed);
-                tabControlMain.TabPages.Add(tabPageTimeAcceleration);
-                tabControlMain.TabPages.Add(tabPageSpeedAcceleration);
-                tabControlMain.TabPages.Add(tabPageTimeSpeedAcc);
-                tabControlMain.TabPages.Add(tabPageReport);
+
+                flag_events = false;
+                gaussB = gauss_width;
+                calc_record.Calculate3(record, with_diff_parm, OutStep, InStep, flagTimeSpeed, number_zub, gaussB, SelectedIndexSmooth);
+
+                bw.ReportProgress(statesWork.finishCalc);
+                flag_calc = true;
+
             }
-
-            flag_calc = true;
-            tabControlMain.SelectedIndex = 4;
-
-            my_scale = 1;
-            cl2d.Zoom_full();
-            hScrollBarGraph.Value = 0;
-            hScrollBarGraph.Maximum = 0;
-            OpenGlControlGraph.Invalidate();
         }
 
-
-        private void CreateGraph(ref ZedGraphControl zgc, ref double[] x,string label_x, ref double[] y,string label_y, int n, string name,string title)
+        bool flag_events = false;
+        private void CalcEvents()
         {
-            // get a reference to the GraphPane
-            GraphPane myPane = zgc.GraphPane;
-            // Set the Titles
-            myPane.Title.Text = title;
-            myPane.XAxis.Title.Text = label_x;
-            myPane.YAxis.Title.Text = label_y;
-
-            // Очистим список кривых на тот случай, если до этого сигналы уже были нарисованы
-            myPane.CurveList.Clear();
-
-            // Make up some data arrays based on the Sine function
-
-            // Включаем отображение сетки напротив крупных рисок по оси Y
-            myPane.YAxis.MajorGrid.IsVisible = true;
-
-
-            // Включаем отображение сетки напротив мелких рисок по оси X
-            myPane.YAxis.MinorGrid.IsVisible = true;
-
-            LineItem myCurve = myPane.AddCurve(name, x, y, System.Drawing.Color.Green, SymbolType.None);
-
-            // Tell ZedGraph to refigure the
-            // axes since the data have changed
-
-            zgc.AxisChange();
-            zgc.Invalidate();
-        }
-
-        private void CreateGraphPercent(ref ZedGraphControl zgc, ref double[] x, string label_x, ref double[] y1, ref double[] y2, string label_y, int n, string name, string title)
-        {
-            double maxY1=y1[0], minY1=y1[0], maxY2=y2[0], minY2=y2[0];
-
-            for (int i = 0; i < n; i++)
+            try
             {
-                if (y1[i] > maxY1) maxY1 = y1[i];
-                if (y1[i] < minY1) minY1 = y1[i];
-                if (y2[i] > maxY2) maxY2 = y2[i];
-                if (y2[i] < minY2) minY2 = y2[i];
-            }
-
-            double[] py1 = new double[n];
-            double[] py2 = new double[n];
-
-            double max = 100, min = -100;
-            for (int i = 0; i < n; i++)
-            {
-                if (minY1 < 0)
+                if (!flag_calc && flag_record) Calculate();
+                if (flag_calc && flag_record)
                 {
-                    if (y1[i] >= 0)
-                        py1[i] = max * y1[i] / maxY1;
+                    //рассчёт 
+                    calc_record.CalculateMaxMin(toolStripComboBoxSelectTypeSeach.SelectedIndex);
+                    //дополнение графиков
+                    TypeAlgorithmFindingPeriods = toolStripComboBoxSelectTypeSeach.SelectedIndex;
+                    if (TypeAlgorithmFindingPeriods == 0)
+                    {
+                        ZedGraphHelper.AppendEventsToGraph(ref zedGraphControlTimeSpeed, calc_record.t_max_loc, calc_record.max_loc, calc_record.t_min_loc, calc_record.min_loc, calc_record.t_InEng, calc_record.InEng, name_minum);
+                        ZedGraphHelper.AppendEventsToGraph(ref zedGraphControlTimeAcceleration, calc_record.t_max_loc, calc_record.max_loc_ac, calc_record.t_min_loc, calc_record.min_loc_ac, calc_record.t_InEng, calc_record.InEng_ac, name_minum);
+                    }
                     else
-                        py1[i] = min * y1[i] / minY1;
+                    {
+                        name_minum = "Синхроимпульс";
+                        ZedGraphHelper.AppendEventsToGraph(ref zedGraphControlTimeSpeed, null, null, calc_record.t_min_loc, calc_record.min_loc, null, null,name_minum);
+                        ZedGraphHelper.AppendEventsToGraph(ref zedGraphControlTimeAcceleration, null, null, calc_record.t_min_loc, calc_record.min_loc_ac, null, null, name_minum);
+                    }
+                    //отчёт
+                    CreateReport();
+
+                    flag_calc = true;
+                    flag_events = true;
+
                 }
-
-                if (minY2 < 0)
-                {
-                    if (y2[i] >= 0)
-                        py2[i] = max * y2[i] / maxY2;
-                    else
-                        py2[i] = min * y2[i] / minY2;
-                }
-
-                if (y2[i] >= 0 && minY2 > 0)
-                    py2[i] = max * (y2[i]-minY2) / (maxY2-minY2);
-
-                if (y1[i] >= 0 && minY1 > 0)
-                    py1[i] = max * (y1[i] - minY1) / (maxY1 - minY1);
-                
             }
-
-            // get a reference to the GraphPane
-            GraphPane myPane = zgc.GraphPane;
-            // Set the Titles
-            myPane.Title.Text = title;
-            myPane.XAxis.Title.Text = label_x;
-            myPane.YAxis.Title.Text = label_y;
-
-            // Очистим список кривых на тот случай, если до этого сигналы уже были нарисованы
-            myPane.CurveList.Clear();
-
-            // Make up some data arrays based on the Sine function
-
-            // Включаем отображение сетки напротив крупных рисок по оси Y
-            myPane.YAxis.MajorGrid.IsVisible = true;
-
-
-            // Включаем отображение сетки напротив мелких рисок по оси X
-            myPane.YAxis.MinorGrid.IsVisible = true;
-
-            LineItem myCurve1 = myPane.AddCurve(name, x, py1, System.Drawing.Color.Green, SymbolType.None);
-            LineItem myCurve2 = myPane.AddCurve(name, x, py2, System.Drawing.Color.Blue, SymbolType.None);
-
-            // Tell ZedGraph to refigure the
-            // axes since the data have changed
-
-            zgc.AxisChange();
-            zgc.Invalidate();
-
+            catch
+            {
+                MessageBox.Show("Неудалось найти события, измените коэфициент сглаживания");
+            }
         }
 
-        private void CreateGraphMaxMin(ref ZedGraphControl zgc, ref double[] x, string label_x, ref double[] y, string label_y, int n, string name, string title, double[] in_tsup, double[] in_vsup, double[] in_tinf, double[] in_vinf)
+        private void CreateBackgroundWorker(DoWorkEventHandler action)
         {
-            // get a reference to the GraphPane
-            GraphPane myPane = zgc.GraphPane;
-            // Set the Titles
-            myPane.Title.Text = title;
-            myPane.XAxis.Title.Text = label_x;
-            myPane.YAxis.Title.Text = label_y;
-
-            // Очистим список кривых на тот случай, если до этого сигналы уже были нарисованы
-            myPane.CurveList.Clear();
-
-            // Make up some data arrays based on the Sine function
-
-            // Включаем отображение сетки напротив крупных рисок по оси Y
-            myPane.YAxis.MajorGrid.IsVisible = true;
-
-
-            // Включаем отображение сетки напротив мелких рисок по оси X
-            myPane.YAxis.MinorGrid.IsVisible = true;
-
-            LineItem myCurve = myPane.AddCurve(name, x, y, System.Drawing.Color.Green, SymbolType.None);
-
-
-            // !!! Минимум
-            // Создадим кривую с названием "Scatter".
-            // Обводка ромбиков будут рисоваться голубым цветом (Color.Blue),
-            // Опорные точки - ромбики (SymbolType.Diamond)
-            LineItem myCurveInf = myPane.AddCurve("Минимум", in_tinf, in_vinf, System.Drawing.Color.Blue, SymbolType.Diamond);
-
-            // !!!
-            // У кривой линия будет невидимой
-            myCurveInf.Line.IsVisible = false;
-
-            // !!!
-            // Цвет заполнения отметок (ромбиков) - колубой
-            myCurveInf.Symbol.Fill.Color = System.Drawing.Color.Blue;
-
-            // !!!
-            // Тип заполнения - сплошная заливка
-            myCurveInf.Symbol.Fill.Type = FillType.None;
-
-            // !!!
-            // Размер ромбиков
-            myCurveInf.Symbol.Size = 7;
-            //..............................................
-
-            // !!! Максимум
-            // Создадим кривую с названием "Scatter".
-            // Обводка ромбиков будут рисоваться голубым цветом (Color.Blue),
-            // Опорные точки - ромбики (SymbolType.Diamond)
-            LineItem myCurveSup = myPane.AddCurve("Максимум", in_tsup, in_vsup, System.Drawing.Color.Red, SymbolType.Circle);
-
-            // !!!
-            // У кривой линия будет невидимой
-            myCurveSup.Line.IsVisible = false;
-
-            // !!!
-            // Цвет заполнения отметок (ромбиков) - колубой
-            myCurveSup.Symbol.Fill.Color = System.Drawing.Color.Blue;
-
-            // !!!
-            // Тип заполнения - сплошная заливка
-            myCurveSup.Symbol.Fill.Type = FillType.None;
-
-            // !!!
-            // Размер ромбиков
-            myCurveSup.Symbol.Size = 7;
-            //..............................................
-
-
-            // !!! Промежуточные точки
-            // Создадим кривую с названием "Scatter".
-            // Обводка ромбиков будут рисоваться голубым цветом (Color.Blue),
-            // Опорные точки - ромбики (SymbolType.Diamond)
-            LineItem myCurveMid = myPane.AddCurve("", calc_record.t_InEng, calc_record.InEng, System.Drawing.Color.Black, SymbolType.Square);
-
-            // !!!
-            // У кривой линия будет невидимой
-            myCurveMid.Line.IsVisible = false;
-
-            // !!!
-            // Цвет заполнения отметок (ромбиков) - колубой
-            myCurveMid.Symbol.Fill.Color = System.Drawing.Color.Blue;
-
-            // !!!
-            // Тип заполнения - сплошная заливка
-            myCurveMid.Symbol.Fill.Type = FillType.None;
-
-            // !!!
-            // Размер ромбиков
-            myCurveMid.Symbol.Size = 7;
-            //..............................................
-
-            // Tell ZedGraph to refigure the
-            // axes since the data have changed
-
-            zgc.AxisChange();
-            zgc.Invalidate();
+            bw = new BackgroundWorker();
+            bw.WorkerReportsProgress = true;
+            bw.WorkerSupportsCancellation = true;
+            bw.ProgressChanged += bw_ProgressChanged;
+            bw.RunWorkerCompleted += bw_RunWorkerCompleted;
+            bw.DoWork += action;
         }
 
-        private void AppendEventsToGraph(ref ZedGraphControl zgc, double[] in_tsup, double[] in_vsup, double[] in_tinf, double[] in_vinf,double [] t_InEng,double[] InEng)
-        {
-            // get a reference to the GraphPane
-            GraphPane myPane = zgc.GraphPane;
-
-            // !!! Минимум
-            // Создадим кривую с названием "Scatter".
-            // Обводка ромбиков будут рисоваться голубым цветом (Color.Blue),
-            // Опорные точки - ромбики (SymbolType.Diamond)
-            LineItem myCurveInf = myPane.AddCurve("Минимум", in_tinf, in_vinf, System.Drawing.Color.Blue, SymbolType.Diamond);
-
-            // !!!
-            // У кривой линия будет невидимой
-            myCurveInf.Line.IsVisible = false;
-
-            // !!!
-            // Цвет заполнения отметок (ромбиков) - колубой
-            myCurveInf.Symbol.Fill.Color = System.Drawing.Color.Blue;
-
-            // !!!
-            // Тип заполнения - сплошная заливка
-            myCurveInf.Symbol.Fill.Type = FillType.None;
-
-            // !!!
-            // Размер ромбиков
-            myCurveInf.Symbol.Size = 7;
-            //..............................................
-
-            // !!! Максимум
-            // Создадим кривую с названием "Scatter".
-            // Обводка ромбиков будут рисоваться голубым цветом (Color.Blue),
-            // Опорные точки - ромбики (SymbolType.Diamond)
-            LineItem myCurveSup = myPane.AddCurve("Максимум", in_tsup, in_vsup, System.Drawing.Color.Red, SymbolType.Circle);
-
-            // !!!
-            // У кривой линия будет невидимой
-            myCurveSup.Line.IsVisible = false;
-
-            // !!!
-            // Цвет заполнения отметок (ромбиков) - колубой
-            myCurveSup.Symbol.Fill.Color = System.Drawing.Color.Blue;
-
-            // !!!
-            // Тип заполнения - сплошная заливка
-            myCurveSup.Symbol.Fill.Type = FillType.None;
-
-            // !!!
-            // Размер ромбиков
-            myCurveSup.Symbol.Size = 7;
-            //..............................................
-
-
-            // !!! Промежуточные точки
-            // Создадим кривую с названием "Scatter".
-            // Обводка ромбиков будут рисоваться голубым цветом (Color.Blue),
-            // Опорные точки - ромбики (SymbolType.Diamond)
-            LineItem myCurveMid = myPane.AddCurve("", t_InEng, InEng, System.Drawing.Color.Black, SymbolType.Square);
-
-            // !!!
-            // У кривой линия будет невидимой
-            myCurveMid.Line.IsVisible = false;
-
-            // !!!
-            // Цвет заполнения отметок (ромбиков) - колубой
-            myCurveMid.Symbol.Fill.Color = System.Drawing.Color.Blue;
-
-            // !!!
-            // Тип заполнения - сплошная заливка
-            myCurveMid.Symbol.Fill.Type = FillType.None;
-
-            // !!!
-            // Размер ромбиков
-            myCurveMid.Symbol.Size = 7;
-            //..............................................
-
-            // Tell ZedGraph to refigure the
-            // axes since the data have changed
-
-            zgc.AxisChange();
-            zgc.Invalidate();
-        }
-        BackgroundWorker bw;
-        private void toolStripButtonCalc_Click(object sender, EventArgs e)
-        {
-            CalculateAsync();
-        }
-        public void CalculateAsync()
+        private void launchBgWorker()
         {
             progressForm = new FormProgressBar(ref bw);
-
             progressForm.Show();
-            bw.DoWork -= bw_DoWorkShowGraph;
-            bw.DoWork -= bw_DoWorkRecalc;
-            bw.DoWork += bw_DoWork;
             bw.RunWorkerAsync(null);
+        }
+
+        private void ShowGrapAsync()
+        {
+            CreateBackgroundWorker(bw_DoWorkShowGraph);
+            launchBgWorker();
+        }
+
+        public void CalculateAsync()
+        {
+            CreateBackgroundWorker(bw_DoWork);
+            gauss_width = Convert.ToDouble(toolStripTextBoxWidthGauss.Text);
+            launchBgWorker();
+        }
+
+        private void RecalcAsync()
+        {
+            CreateBackgroundWorker(bw_DoWorkRecalc);
+            gauss_width = Convert.ToDouble(toolStripTextBoxWidthGauss.Text);
+            launchBgWorker();
         }
 
         void bw_DoWork(object sender, DoWorkEventArgs e)
@@ -1436,12 +1273,13 @@ namespace WindowsFormsGraphickOpenGL
         {
             bw.ReportProgress(statesWork.start);
             ShowGraph();
+            //System.Threading.Thread.Sleep(5000);
             bw.ReportProgress(statesWork.stop);
         }
 
         void bw_DoWorkRecalc(object sender, DoWorkEventArgs e)
         {
-            bw.ReportProgress(statesWork.start);
+            bw.ReportProgress(statesWork.startCalc);
             ReCalc(true,true,true);
             bw.ReportProgress(statesWork.stop);
         }
@@ -1449,10 +1287,8 @@ namespace WindowsFormsGraphickOpenGL
         void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             this.Enabled = true;
-            //menuStrip1.Enabled = true;
-            //toolStripMainMenu.Enabled = true;
-            //explorerTreeMain.Enabled = true;
         }
+        
         void bw_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             if (e.ProgressPercentage == statesWork.stop)
@@ -1469,9 +1305,6 @@ namespace WindowsFormsGraphickOpenGL
             if (e.ProgressPercentage == statesWork.start)
             {
                 this.Enabled = false;
-                //menuStrip1.Enabled = false;
-                //toolStripMainMenu.Enabled = false;
-                //explorerTreeMain.Enabled = false;
             }
 
             if (bw.CancellationPending == true) { this.Enabled = true; return; }
@@ -1516,11 +1349,19 @@ namespace WindowsFormsGraphickOpenGL
 
         }
 
+        #endregion
+
+        private void toolStripButtonCalc_Click(object sender, EventArgs e)
+        {
+            CalculateAsync();
+        }
+
         private void calcToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CalculateAsync();
         }
 
+        #region Save Report
         string namemy_file="";
         private void ToolStripMenuItemSaveReportAs_Click(object sender, EventArgs e)
         {
@@ -1568,6 +1409,8 @@ namespace WindowsFormsGraphickOpenGL
                 }
             }
         }
+
+        #endregion
 
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -1630,57 +1473,7 @@ namespace WindowsFormsGraphickOpenGL
             //ReCalc(false,true,true);
         }
 
-        private void ReCalc(bool flagTimeSpeed, bool flagTimeAcceleration, bool flagSpeedAcceleration)
-        {
-            if (!flag_calc && flag_record) Calculate();
-            if (flag_calc && flag_record)
-            {
-
-                //рассчёт 
-                //calc_record = new ClassCalc();
-                //calc_record.Calculate(record);
-                flag_events = false;
-                gaussB = Convert.ToDouble(toolStripTextBoxWidthGauss.Text);
-                calc_record.Calculate3(record, with_diff_parm, OutStep, InStep, flagTimeSpeed, number_zub, gaussB, SelectedIndexSmooth);
-
-                //вывод графиков
-                if (flagTimeSpeed) CreateGraph(ref zedGraphControlTimeSpeed, ref calc_record.t_vu, "время, сек", ref calc_record.vu, "частота вращения, об/мин", calc_record.kol_vu, "", "");
-                //if (flagTimeSpeed) CreateGraphMaxMin(ref zedGraphControlTimeSpeed, ref calc_record.t_vu, "время, сек", ref calc_record.vu, "частота вращения, об/мин", calc_record.kol_vu, "", "",
-                //    calc_record.t_min_loc,calc_record.min_loc,calc_record.t_max_loc,calc_record.max_loc);
-                if (flagTimeAcceleration) CreateGraph(ref zedGraphControlTimeAcceleration, ref calc_record.t_ac, "время, с", ref calc_record.ac, "ускорение, рад/c^2", calc_record.kol_ac, "", "");
-                if (flagSpeedAcceleration) CreateGraph(ref zedGraphControlSpeedAcceleration, ref calc_record.vu, "частота вращения, об/мин", ref calc_record.ac, "ускорение, рад/c^2", calc_record.kol_ac, "", "");   
-                CreateReport();
-
-                flag_calc = true;
-
-            }
-        }
-        bool flag_events = false;
-        private void CalcEvents()
-        {
-            try
-            {
-                if (!flag_calc && flag_record) Calculate();
-                if (flag_calc && flag_record)
-                {
-                    //рассчёт 
-                    calc_record.CalculateMaxMin();
-                    //дополнение графиков
-                    AppendEventsToGraph(ref zedGraphControlTimeSpeed, calc_record.t_max_loc, calc_record.max_loc,calc_record.t_min_loc, calc_record.min_loc,calc_record.t_InEng,calc_record.InEng);
-                    AppendEventsToGraph(ref zedGraphControlTimeAcceleration, calc_record.t_max_loc, calc_record.max_loc_ac, calc_record.t_min_loc, calc_record.min_loc_ac, calc_record.t_InEng, calc_record.InEng_ac);
-                    //отчёт
-                    CreateReport();
-
-                    flag_calc = true;
-                    flag_events = true;
-
-                }
-            }
-            catch
-            {
-                MessageBox.Show("Неудалось найти события, измените коэфициент сглаживания");
-            }
-        }
+        #region OpenGL Graph
 
         private void OpenGlControlGraph_SizeChanged(object sender, EventArgs e)
         {
@@ -1733,8 +1526,11 @@ namespace WindowsFormsGraphickOpenGL
             }
         }
 
+        #endregion
 
+        #region Two Way Smooth
         //////////////////////////////внешний шаг////////////////////////
+        #region Inner Step
         int max_with_OutStep = 720;
         int min_with_OutStep = 1;
         int OutStep = 10;
@@ -1789,10 +1585,11 @@ namespace WindowsFormsGraphickOpenGL
 
             ReCalc(true,true,true);
         }
-
+        #endregion
         ////////////////////////////////////////////////////////////////////////////////////
 
         //////////////////////////////внутренний шаг////////////////////////
+        #region Outer Step
         int max_with_InStep = 720;
         int min_with_InStep = 1;
         int InStep = 5;
@@ -1847,43 +1644,12 @@ namespace WindowsFormsGraphickOpenGL
 
             ReCalc(true, true, true);
         }
+        #endregion
+        ////////////////////////////////////////////////////////
+        #endregion
 
-        void MakeVisibelGaussSmooth(bool value)
-        {
-            toolStripLabelGauss.Visible = value;
-            toolStripTextBoxWidthGauss.Visible = value;
-        }
-
-        void MakeVisibel2ParamSmooth(bool value)
-        {
-            toolStripOutStep.Visible = value;
-            toolStripTextBoxOutStep.Visible = value;
-            toolStripButtonIncOutStep.Visible = value;
-            toolStripButtonDecOutStep.Visible = value;
-            toolStripSeparator3.Visible = value;
-            toolStripLabelInStep.Visible = value;
-            toolStripTextBoxInStep.Visible = value;
-            toolStripButtonIncInStep.Visible = value;
-            toolStripButtonDecInStep.Visible = value;
-        }
-
-        int SelectedIndexSmooth = 0;
-        private void toolStripComboBoxSmooth_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (toolStripComboBoxSmooth.SelectedIndex == 0)
-            {
-                MakeVisibelGaussSmooth(false);
-                MakeVisibel2ParamSmooth(true);
-                SelectedIndexSmooth = 0; 
-            }
-            else
-            {
-                MakeVisibelGaussSmooth(true);
-                MakeVisibel2ParamSmooth(false);
-                SelectedIndexSmooth = 1; 
-            }
-        }
-
+        //////////// Сглаживание Гаусса
+        #region Gauss Smooth
         private void toolStripTextBoxWidthGauss_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsNumber(e.KeyChar) & (Keys)e.KeyChar != Keys.Back & e.KeyChar != '.')
@@ -1918,16 +1684,56 @@ namespace WindowsFormsGraphickOpenGL
         {
             
         }
+        #endregion
+        //////////////////////
+
+        #region Change Type Smooth
+        void MakeVisibelGaussSmooth(bool value)
+        {
+            toolStripLabelGauss.Visible = value;
+            toolStripTextBoxWidthGauss.Visible = value;
+        }
+
+        void MakeVisibel2ParamSmooth(bool value)
+        {
+            toolStripOutStep.Visible = value;
+            toolStripTextBoxOutStep.Visible = value;
+            toolStripButtonIncOutStep.Visible = value;
+            toolStripButtonDecOutStep.Visible = value;
+            toolStripSeparator3.Visible = value;
+            toolStripLabelInStep.Visible = value;
+            toolStripTextBoxInStep.Visible = value;
+            toolStripButtonIncInStep.Visible = value;
+            toolStripButtonDecInStep.Visible = value;
+        }
+
+        int SelectedIndexSmooth = 0;
+        private void toolStripComboBoxSmooth_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (toolStripComboBoxSmooth.SelectedIndex == 0)
+            {
+                MakeVisibelGaussSmooth(false);
+                MakeVisibel2ParamSmooth(true);
+                SelectedIndexSmooth = 0;
+            }
+            else
+            {
+                MakeVisibelGaussSmooth(true);
+                MakeVisibel2ParamSmooth(false);
+                SelectedIndexSmooth = 1;
+            }
+        }
+
+        #endregion
 
         private void toolStripButtonReCalc_Click(object sender, EventArgs e)
         {
-            progressForm = new FormProgressBar(ref bw);
+            RecalcAsync();
+        }
 
-            progressForm.Show();
-            bw.DoWork -= bw_DoWorkShowGraph;
-            bw.DoWork -= bw_DoWork;
-            bw.DoWork += bw_DoWorkRecalc;
-            bw.RunWorkerAsync(null);
+        private void ReCalcToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RecalcAsync();
         }
 
         private void toolStripButtonFindEvent_Click(object sender, EventArgs e)
@@ -1936,21 +1742,20 @@ namespace WindowsFormsGraphickOpenGL
             CalcEvents();
         }
 
-        private void ReCalcToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            progressForm = new FormProgressBar(ref bw);
-
-            progressForm.Show();
-            bw.DoWork -= bw_DoWorkShowGraph;
-            bw.DoWork -= bw_DoWork;
-            bw.DoWork += bw_DoWorkRecalc;
-            bw.RunWorkerAsync(null);
-        }
-
         private void findEventsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!flag_events)
                 CalcEvents();
+        }
+
+        private void toolStripComboBoxSelectTypeSeach_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            flag_events = false;
+        }
+
+        private void ToolStripMenuItemAbout_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("RMCA " + Assembly.GetExecutingAssembly().GetName().Version.ToString());
         }
 
 

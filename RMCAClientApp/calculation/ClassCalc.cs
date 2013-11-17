@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Record;
 using System.IO;
+using System.Drawing;
 
 namespace WindowsFormsGraphickOpenGL
 {
@@ -19,6 +20,8 @@ namespace WindowsFormsGraphickOpenGL
         double median_vu;   //среднее значения датчика частоты вращения
         int kol_front_vu;   //количество точек пересечения со средней линией
         double [] front_vu; //фронты (точки пересечения)
+
+        double[] front_period; //фронты (точки пересечения)
 
         public int kol_vu;     //количество частот которые удалось вычислить
         public double[] t_vu;  //время частоты вращения
@@ -54,6 +57,22 @@ namespace WindowsFormsGraphickOpenGL
             median_vu = median_vu / record.KadrsNumber;
         }
 
+        double GetMedianChannelImpuls(int ch_number)
+        {
+            double res = 0;
+            int i;
+            res = 0;
+            for (i = 0; i < record.KadrsNumber; i++)
+            {
+                res += record.ch[ch_number][i];
+            }
+            res = res / record.KadrsNumber;
+
+            res = (res + record.ch[ch_number].Max())/2.0;
+
+            return res;
+        }
+
         void GetFrontVu()
         {
             int q = 0;
@@ -82,6 +101,41 @@ namespace WindowsFormsGraphickOpenGL
                 }
             }
 
+        }
+
+
+        double[] GetFront(int ch_number = 0)
+        {
+            double[] res = null;
+            int q = 0;
+            int i;
+            double median_value = GetMedianChannelImpuls(ch_number);
+            int kol_front = 0;
+            //подсчёт количества фронтов
+            for (i = 0; i < record.KadrsNumber - 4; i++)
+            {
+
+                if (record.ch[ch_vu][i] > median_value && record.ch[ch_number][i + 1] > median_value && record.ch[ch_number][i + 2] > median_value)
+                {
+                    q++; i++;
+                    for (; (i < record.KadrsNumber - 4) && record.ch[ch_number][i] > median_value && record.ch[ch_number][i + 1] > median_value && record.ch[ch_number][i + 2] > median_value; i++) ;
+                }
+            }
+            kol_front = q;
+
+            q = 0;
+            res = new double[kol_front];
+            for (i = 0; i < record.KadrsNumber - 4; i++)
+            {
+                if (record.ch[ch_number][i] > median_value && record.ch[ch_number][i + 1] > median_value && record.ch[ch_number][i + 2] > median_value)
+                {
+                    res[q] = record.time[i]; q++; i++;
+                    for (; (i < record.KadrsNumber - 4) && record.ch[ch_number][i] > median_value && record.ch[ch_number][i + 1] > median_value && record.ch[ch_number][i + 2] > median_value; i++)
+                    { }
+                }
+            }
+
+            return res;
         }
 
         void GetVu()
@@ -229,7 +283,7 @@ namespace WindowsFormsGraphickOpenGL
         void GetMaxMin()
         {
             double mid_value;
-            mid_value = (vu.Max() + vu.Min()) / 2.0;
+            mid_value = (0.60*vu.Max() + 0.40*vu.Min());
             int i;
             int kol_max = 0;
             bool flag_start=false;
@@ -290,12 +344,14 @@ namespace WindowsFormsGraphickOpenGL
                 {
                     i = pos_max_loc[j];
                     min_loc[j] = vu[i];
+                    min_loc_ac[j] = ac[i];
                     t_min_loc[j] = t_vu[i];
                     pos_min_loc[j] = i;
                     for (; i < pos_max_loc[j + 1]; i++)
                         if (vu[i] < min_loc[j])
                         {
                             min_loc[j] = vu[i];
+                            min_loc_ac[j] = ac[i];
                             t_min_loc[j] = t_vu[i];
                             pos_min_loc[j] = i;
                         }
@@ -378,6 +434,57 @@ namespace WindowsFormsGraphickOpenGL
 
         }
 
+        void GetSynchroMax()
+        {
+
+            //находим значения синхроимпульса
+            front_period = GetFront(1);
+            int j;
+
+            pos_min_loc = new int[front_period.Count()];
+            t_min_loc = new double[front_period.Count()];
+            min_loc = new double[front_period.Count()];
+            min_loc_ac = new double[front_period.Count()];
+            for (j = 0; j < front_period.Count(); j++)
+            {
+                //записываем время
+                t_min_loc[j] = front_period[j];
+
+                //находим частоту и номер ипульса частоты
+                PointFunc res = GetValueFunc(t_min_loc[j], t_vu, vu);
+                min_loc[j] = res.y;
+                pos_min_loc[j] = Convert.ToInt32(res.x);
+
+                res = GetValueFunc(t_min_loc[j], t_ac, ac);
+                min_loc_ac[j] = res.y;
+            }
+
+        }
+
+        PointFunc GetValueFunc(double t,double [] x, double [] y)
+        {
+            PointFunc res = new PointFunc();
+            int i;
+            for (i = 0; i < x.Length; i++)
+            {
+                if (t <= x[i]) break;
+            }
+            res.x = i;
+            if (i < x.Length - 1)
+            {
+                double y1, y2;
+                double t1, t2;
+                y1 = y[i]; y2 = y[i + 1];
+                t1 = x[i]; t2 = x[i + 1];
+                double k = (y2 - y1) / (t2 - t1);
+                res.y = k * (t - t1) + y1;
+            }
+            else
+                res.y = vu[i];
+            return res;
+        }
+
+
         public int TypeSmooth = 0;
         public void Calculate2(ClassRecord __record, int in_with_diff, int in_OutStep, int in_InStep,int in_Number_zub,double in_gaussB,int in_TypeSmooth)
         {
@@ -414,9 +521,13 @@ namespace WindowsFormsGraphickOpenGL
             
         }
 
-        public void CalculateMaxMin()
+        public void CalculateMaxMin(int typeAlgorithmFindingPeriods)
         {
-            GetMaxMin();
+            if(typeAlgorithmFindingPeriods == TypeAlgorithmFindingPeriods.AlgorithmMinMax)
+                GetMaxMin();
+
+            if (typeAlgorithmFindingPeriods == TypeAlgorithmFindingPeriods.AlgorithmUseSecondChannel)
+                GetSynchroMax();
         }
 
         public void OutputData(string path)

@@ -103,6 +103,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="calculation\PointFunc.cs" />
+    <Compile Include="calculation\TypeAlgorithmFindingPeriods.cs" />
+    <Compile Include="graphicks\ZedGraphHelper.cs" />
     <Compile Include="statesWork.cs" />
     <Compile Include="calculation\ClassCalc.cs" />
     <Compile Include="graphicks\ClassOpenGLGraphick2D.cs" />

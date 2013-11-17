@@ -80,6 +80,7 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripComboBoxSmooth = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripComboBoxSelectTypeSeach = new System.Windows.Forms.ToolStripComboBox();
             this.saveFileReportDialog = new System.Windows.Forms.SaveFileDialog();
             this.splitContainerMain = new System.Windows.Forms.SplitContainer();
             this.splitContainerTreeFilePath = new System.Windows.Forms.SplitContainer();
@@ -96,12 +97,12 @@
             this.pictureBoxGraphData = new System.Windows.Forms.PictureBox();
             this.OpenGlControlGraph = new Tao.Platform.Windows.SimpleOpenGlControl();
             this.tableLayoutPanelScroll = new System.Windows.Forms.TableLayoutPanel();
-            this.hScrollBarGraph = new System.Windows.Forms.HScrollBar();
             this.toolStripGraphTools = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonGraphZoomIn = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonGraphZoomOut = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonGraphFullView = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonGraphSave = new System.Windows.Forms.ToolStripButton();
+            this.hScrollBarGraph = new System.Windows.Forms.HScrollBar();
             this.tabPageTimeSpeed = new System.Windows.Forms.TabPage();
             this.zedGraphControlTimeSpeed = new ZedGraph.ZedGraphControl();
             this.tabPageTimeAcceleration = new System.Windows.Forms.TabPage();
@@ -366,6 +367,7 @@
             this.ToolStripMenuItemAbout.Name = "ToolStripMenuItemAbout";
             this.ToolStripMenuItemAbout.Size = new System.Drawing.Size(149, 22);
             this.ToolStripMenuItemAbout.Text = "О программе";
+            this.ToolStripMenuItemAbout.Click += new System.EventHandler(this.ToolStripMenuItemAbout_Click);
             // 
             // toolStripMainMenu
             // 
@@ -396,10 +398,11 @@
             this.toolStripTextBoxWidthGauss,
             this.toolStripSeparator4,
             this.toolStripComboBoxSmooth,
-            this.toolStripSeparator5});
+            this.toolStripSeparator5,
+            this.toolStripComboBoxSelectTypeSeach});
             this.toolStripMainMenu.Location = new System.Drawing.Point(0, 24);
             this.toolStripMainMenu.Name = "toolStripMainMenu";
-            this.toolStripMainMenu.Size = new System.Drawing.Size(1276, 25);
+            this.toolStripMainMenu.Size = new System.Drawing.Size(1276, 27);
             this.toolStripMainMenu.TabIndex = 14;
             this.toolStripMainMenu.Text = "toolStrip1";
             // 
@@ -409,7 +412,7 @@
             this.toolStripButtonCalc.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonCalc.Image")));
             this.toolStripButtonCalc.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonCalc.Name = "toolStripButtonCalc";
-            this.toolStripButtonCalc.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonCalc.Size = new System.Drawing.Size(23, 24);
             this.toolStripButtonCalc.Text = "Вычислить";
             this.toolStripButtonCalc.Click += new System.EventHandler(this.toolStripButtonCalc_Click);
             // 
@@ -419,7 +422,7 @@
             this.toolStripButtonReCalc.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonReCalc.Image")));
             this.toolStripButtonReCalc.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonReCalc.Name = "toolStripButtonReCalc";
-            this.toolStripButtonReCalc.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonReCalc.Size = new System.Drawing.Size(23, 24);
             this.toolStripButtonReCalc.Text = "toolStripButton1";
             this.toolStripButtonReCalc.ToolTipText = "Пересчитать";
             this.toolStripButtonReCalc.Click += new System.EventHandler(this.toolStripButtonReCalc_Click);
@@ -430,7 +433,7 @@
             this.toolStripButtonFindEvent.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonFindEvent.Image")));
             this.toolStripButtonFindEvent.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonFindEvent.Name = "toolStripButtonFindEvent";
-            this.toolStripButtonFindEvent.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonFindEvent.Size = new System.Drawing.Size(23, 24);
             this.toolStripButtonFindEvent.Text = "Найти события";
             this.toolStripButtonFindEvent.Click += new System.EventHandler(this.toolStripButtonFindEvent_Click);
             // 
@@ -440,7 +443,7 @@
             this.toolStripButtonShowGraph.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonShowGraph.Image")));
             this.toolStripButtonShowGraph.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonShowGraph.Name = "toolStripButtonShowGraph";
-            this.toolStripButtonShowGraph.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonShowGraph.Size = new System.Drawing.Size(23, 24);
             this.toolStripButtonShowGraph.Text = "Построить график исходных данных";
             this.toolStripButtonShowGraph.Click += new System.EventHandler(this.toolStripButtonShowGraph_Click);
             // 
@@ -450,20 +453,20 @@
             this.toolStripButtonSaveReport.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSaveReport.Image")));
             this.toolStripButtonSaveReport.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonSaveReport.Name = "toolStripButtonSaveReport";
-            this.toolStripButtonSaveReport.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonSaveReport.Size = new System.Drawing.Size(23, 24);
             this.toolStripButtonSaveReport.Text = "Сохранить отчёт";
             this.toolStripButtonSaveReport.Click += new System.EventHandler(this.toolStripButtonSaveReport_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
             this.toolStripSeparator1.Visible = false;
             // 
             // toolStripLabelWidthDiff
             // 
             this.toolStripLabelWidthDiff.Name = "toolStripLabelWidthDiff";
-            this.toolStripLabelWidthDiff.Size = new System.Drawing.Size(62, 22);
+            this.toolStripLabelWidthDiff.Size = new System.Drawing.Size(62, 24);
             this.toolStripLabelWidthDiff.Text = "Параметр";
             this.toolStripLabelWidthDiff.Visible = false;
             // 
@@ -471,7 +474,7 @@
             // 
             this.toolStripTextBoxParam.MaxLength = 2;
             this.toolStripTextBoxParam.Name = "toolStripTextBoxParam";
-            this.toolStripTextBoxParam.Size = new System.Drawing.Size(30, 25);
+            this.toolStripTextBoxParam.Size = new System.Drawing.Size(30, 27);
             this.toolStripTextBoxParam.Visible = false;
             this.toolStripTextBoxParam.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.toolStripTextBoxParam_KeyPress);
             this.toolStripTextBoxParam.TextChanged += new System.EventHandler(this.toolStripTextBoxParam_TextChanged);
@@ -482,7 +485,7 @@
             this.toolStripButtonIncParam.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonIncParam.Image")));
             this.toolStripButtonIncParam.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonIncParam.Name = "toolStripButtonIncParam";
-            this.toolStripButtonIncParam.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonIncParam.Size = new System.Drawing.Size(23, 24);
             this.toolStripButtonIncParam.Visible = false;
             this.toolStripButtonIncParam.Click += new System.EventHandler(this.toolStripButtonIncParam_Click);
             // 
@@ -492,25 +495,25 @@
             this.toolStripButtonDecParam.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDecParam.Image")));
             this.toolStripButtonDecParam.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonDecParam.Name = "toolStripButtonDecParam";
-            this.toolStripButtonDecParam.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonDecParam.Size = new System.Drawing.Size(23, 24);
             this.toolStripButtonDecParam.Visible = false;
             this.toolStripButtonDecParam.Click += new System.EventHandler(this.toolStripButtonDecParam_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripOutStep
             // 
             this.toolStripOutStep.Name = "toolStripOutStep";
-            this.toolStripOutStep.Size = new System.Drawing.Size(144, 22);
+            this.toolStripOutStep.Size = new System.Drawing.Size(144, 24);
             this.toolStripOutStep.Text = "Коэфициент накопления";
             // 
             // toolStripTextBoxOutStep
             // 
             this.toolStripTextBoxOutStep.Name = "toolStripTextBoxOutStep";
-            this.toolStripTextBoxOutStep.Size = new System.Drawing.Size(30, 25);
+            this.toolStripTextBoxOutStep.Size = new System.Drawing.Size(30, 27);
             this.toolStripTextBoxOutStep.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.toolStripTextBoxOutStep_KeyPress);
             this.toolStripTextBoxOutStep.TextChanged += new System.EventHandler(this.toolStripTextBoxOutStep_TextChanged);
             // 
@@ -520,7 +523,7 @@
             this.toolStripButtonIncOutStep.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonIncOutStep.Image")));
             this.toolStripButtonIncOutStep.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonIncOutStep.Name = "toolStripButtonIncOutStep";
-            this.toolStripButtonIncOutStep.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonIncOutStep.Size = new System.Drawing.Size(23, 24);
             this.toolStripButtonIncOutStep.Text = "toolStripButton1";
             this.toolStripButtonIncOutStep.Click += new System.EventHandler(this.toolStripButtonIncOutStep_Click);
             // 
@@ -530,25 +533,25 @@
             this.toolStripButtonDecOutStep.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDecOutStep.Image")));
             this.toolStripButtonDecOutStep.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonDecOutStep.Name = "toolStripButtonDecOutStep";
-            this.toolStripButtonDecOutStep.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonDecOutStep.Size = new System.Drawing.Size(23, 24);
             this.toolStripButtonDecOutStep.Text = "toolStripButton2";
             this.toolStripButtonDecOutStep.Click += new System.EventHandler(this.toolStripButtonDecOutStep_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripLabelInStep
             // 
             this.toolStripLabelInStep.Name = "toolStripLabelInStep";
-            this.toolStripLabelInStep.Size = new System.Drawing.Size(136, 22);
+            this.toolStripLabelInStep.Size = new System.Drawing.Size(136, 24);
             this.toolStripLabelInStep.Text = "Коэфициент смещения";
             // 
             // toolStripTextBoxInStep
             // 
             this.toolStripTextBoxInStep.Name = "toolStripTextBoxInStep";
-            this.toolStripTextBoxInStep.Size = new System.Drawing.Size(30, 25);
+            this.toolStripTextBoxInStep.Size = new System.Drawing.Size(30, 27);
             this.toolStripTextBoxInStep.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.toolStripTextBoxInStep_KeyPress);
             this.toolStripTextBoxInStep.TextChanged += new System.EventHandler(this.toolStripTextBoxInStep_TextChanged);
             // 
@@ -558,7 +561,7 @@
             this.toolStripButtonIncInStep.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonIncInStep.Image")));
             this.toolStripButtonIncInStep.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonIncInStep.Name = "toolStripButtonIncInStep";
-            this.toolStripButtonIncInStep.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonIncInStep.Size = new System.Drawing.Size(23, 24);
             this.toolStripButtonIncInStep.Text = "toolStripButtonIncInStep";
             this.toolStripButtonIncInStep.Click += new System.EventHandler(this.toolStripButtonIncInStep_Click);
             // 
@@ -568,20 +571,20 @@
             this.toolStripButtonDecInStep.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDecInStep.Image")));
             this.toolStripButtonDecInStep.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonDecInStep.Name = "toolStripButtonDecInStep";
-            this.toolStripButtonDecInStep.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonDecInStep.Size = new System.Drawing.Size(23, 24);
             this.toolStripButtonDecInStep.Text = "toolStripButton2";
             this.toolStripButtonDecInStep.Click += new System.EventHandler(this.toolStripButtonDecInStep_Click);
             // 
             // toolStripLabelGauss
             // 
             this.toolStripLabelGauss.Name = "toolStripLabelGauss";
-            this.toolStripLabelGauss.Size = new System.Drawing.Size(156, 22);
+            this.toolStripLabelGauss.Size = new System.Drawing.Size(156, 24);
             this.toolStripLabelGauss.Text = "Ширина окна сглаживания";
             // 
             // toolStripTextBoxWidthGauss
             // 
             this.toolStripTextBoxWidthGauss.Name = "toolStripTextBoxWidthGauss";
-            this.toolStripTextBoxWidthGauss.Size = new System.Drawing.Size(100, 25);
+            this.toolStripTextBoxWidthGauss.Size = new System.Drawing.Size(100, 27);
             this.toolStripTextBoxWidthGauss.Leave += new System.EventHandler(this.toolStripTextBoxWidthGauss_Leave);
             this.toolStripTextBoxWidthGauss.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.toolStripTextBoxWidthGauss_KeyPress);
             this.toolStripTextBoxWidthGauss.TextChanged += new System.EventHandler(this.toolStripTextBoxWidthGauss_TextChanged);
@@ -589,7 +592,7 @@
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripComboBoxSmooth
             // 
@@ -598,13 +601,23 @@
             "Двухпараметрическое сглаживание",
             "Сглаживание Гаусса"});
             this.toolStripComboBoxSmooth.Name = "toolStripComboBoxSmooth";
-            this.toolStripComboBoxSmooth.Size = new System.Drawing.Size(250, 25);
+            this.toolStripComboBoxSmooth.Size = new System.Drawing.Size(250, 27);
             this.toolStripComboBoxSmooth.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxSmooth_SelectedIndexChanged);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 27);
+            // 
+            // toolStripComboBoxSelectTypeSeach
+            // 
+            this.toolStripComboBoxSelectTypeSeach.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.toolStripComboBoxSelectTypeSeach.Items.AddRange(new object[] {
+            "Поиск событий по мин. и мак.",
+            "Поиск событий по второму каналу"});
+            this.toolStripComboBoxSelectTypeSeach.Name = "toolStripComboBoxSelectTypeSeach";
+            this.toolStripComboBoxSelectTypeSeach.Size = new System.Drawing.Size(250, 23);
+            this.toolStripComboBoxSelectTypeSeach.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxSelectTypeSeach_SelectedIndexChanged);
             // 
             // saveFileReportDialog
             // 
@@ -616,7 +629,7 @@
             // splitContainerMain
             // 
             this.splitContainerMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerMain.Location = new System.Drawing.Point(0, 49);
+            this.splitContainerMain.Location = new System.Drawing.Point(0, 51);
             this.splitContainerMain.Name = "splitContainerMain";
             // 
             // splitContainerMain.Panel1
@@ -626,7 +639,7 @@
             // splitContainerMain.Panel2
             // 
             this.splitContainerMain.Panel2.Controls.Add(this.tabControlMain);
-            this.splitContainerMain.Size = new System.Drawing.Size(1276, 714);
+            this.splitContainerMain.Size = new System.Drawing.Size(1276, 712);
             this.splitContainerMain.SplitterDistance = 252;
             this.splitContainerMain.TabIndex = 17;
             this.splitContainerMain.SplitterMoving += new System.Windows.Forms.SplitterCancelEventHandler(this.splitContainerMain_SplitterMoving);
@@ -646,8 +659,8 @@
             // splitContainerTreeFilePath.Panel2
             // 
             this.splitContainerTreeFilePath.Panel2.Controls.Add(this.dataGridViewFiles);
-            this.splitContainerTreeFilePath.Size = new System.Drawing.Size(252, 714);
-            this.splitContainerTreeFilePath.SplitterDistance = 424;
+            this.splitContainerTreeFilePath.Size = new System.Drawing.Size(252, 712);
+            this.splitContainerTreeFilePath.SplitterDistance = 422;
             this.splitContainerTreeFilePath.TabIndex = 0;
             // 
             // explorerTreeMain
@@ -663,7 +676,7 @@
             this.explorerTreeMain.ShowMyFavorites = true;
             this.explorerTreeMain.ShowMyNetwork = true;
             this.explorerTreeMain.ShowToolbar = true;
-            this.explorerTreeMain.Size = new System.Drawing.Size(252, 424);
+            this.explorerTreeMain.Size = new System.Drawing.Size(252, 422);
             this.explorerTreeMain.TabIndex = 0;
             this.explorerTreeMain.PathChanged += new WindowsExplorer.ExplorerTree.PathChangedEventHandler(this.explorerTreeMain_PathChanged);
             // 
@@ -730,7 +743,7 @@
             this.tabControlMain.Location = new System.Drawing.Point(0, 0);
             this.tabControlMain.Name = "tabControlMain";
             this.tabControlMain.SelectedIndex = 0;
-            this.tabControlMain.Size = new System.Drawing.Size(1020, 714);
+            this.tabControlMain.Size = new System.Drawing.Size(1020, 712);
             this.tabControlMain.TabIndex = 17;
             // 
             // tabPageGraphFile
@@ -739,7 +752,7 @@
             this.tabPageGraphFile.Location = new System.Drawing.Point(4, 22);
             this.tabPageGraphFile.Name = "tabPageGraphFile";
             this.tabPageGraphFile.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageGraphFile.Size = new System.Drawing.Size(1012, 688);
+            this.tabPageGraphFile.Size = new System.Drawing.Size(1012, 686);
             this.tabPageGraphFile.TabIndex = 0;
             this.tabPageGraphFile.Text = "График исходных данных";
             this.tabPageGraphFile.UseVisualStyleBackColor = true;
@@ -756,7 +769,7 @@
             this.tableLayoutPanelGraphMain.RowCount = 2;
             this.tableLayoutPanelGraphMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanelGraphMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanelGraphMain.Size = new System.Drawing.Size(1006, 682);
+            this.tableLayoutPanelGraphMain.Size = new System.Drawing.Size(1006, 680);
             this.tableLayoutPanelGraphMain.TabIndex = 19;
             // 
             // panel1
@@ -766,7 +779,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1000, 636);
+            this.panel1.Size = new System.Drawing.Size(1000, 634);
             this.panel1.TabIndex = 12;
             // 
             // pictureBoxGraphData
@@ -775,7 +788,7 @@
             this.pictureBoxGraphData.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBoxGraphData.Location = new System.Drawing.Point(0, 0);
             this.pictureBoxGraphData.Name = "pictureBoxGraphData";
-            this.pictureBoxGraphData.Size = new System.Drawing.Size(1000, 636);
+            this.pictureBoxGraphData.Size = new System.Drawing.Size(1000, 634);
             this.pictureBoxGraphData.TabIndex = 4;
             this.pictureBoxGraphData.TabStop = false;
             // 
@@ -793,7 +806,7 @@
             this.OpenGlControlGraph.Dock = System.Windows.Forms.DockStyle.Fill;
             this.OpenGlControlGraph.Location = new System.Drawing.Point(0, 0);
             this.OpenGlControlGraph.Name = "OpenGlControlGraph";
-            this.OpenGlControlGraph.Size = new System.Drawing.Size(1000, 636);
+            this.OpenGlControlGraph.Size = new System.Drawing.Size(1000, 634);
             this.OpenGlControlGraph.StencilBits = ((byte)(0));
             this.OpenGlControlGraph.TabIndex = 3;
             this.OpenGlControlGraph.SizeChanged += new System.EventHandler(this.OpenGlControlGraph_SizeChanged);
@@ -804,33 +817,22 @@
             // 
             this.tableLayoutPanelScroll.ColumnCount = 2;
             this.tableLayoutPanelScroll.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelScroll.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 129F));
+            this.tableLayoutPanelScroll.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 130F));
+            this.tableLayoutPanelScroll.Controls.Add(this.toolStripGraphTools, 1, 0);
             this.tableLayoutPanelScroll.Controls.Add(this.hScrollBarGraph, 0, 0);
-            this.tableLayoutPanelScroll.Controls.Add(this.toolStripGraphTools, 0, 0);
             this.tableLayoutPanelScroll.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelScroll.Location = new System.Drawing.Point(3, 645);
+            this.tableLayoutPanelScroll.Location = new System.Drawing.Point(3, 643);
             this.tableLayoutPanelScroll.Name = "tableLayoutPanelScroll";
             this.tableLayoutPanelScroll.RowCount = 1;
             this.tableLayoutPanelScroll.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanelScroll.Size = new System.Drawing.Size(1000, 34);
             this.tableLayoutPanelScroll.TabIndex = 4;
             // 
-            // hScrollBarGraph
-            // 
-            this.hScrollBarGraph.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.hScrollBarGraph.LargeChange = 1;
-            this.hScrollBarGraph.Location = new System.Drawing.Point(0, 0);
-            this.hScrollBarGraph.Maximum = 0;
-            this.hScrollBarGraph.Name = "hScrollBarGraph";
-            this.hScrollBarGraph.Size = new System.Drawing.Size(871, 34);
-            this.hScrollBarGraph.TabIndex = 18;
-            this.hScrollBarGraph.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar1_Scroll);
-            // 
             // toolStripGraphTools
             // 
             this.toolStripGraphTools.AutoSize = false;
             this.toolStripGraphTools.CanOverflow = false;
-            this.toolStripGraphTools.Dock = System.Windows.Forms.DockStyle.Left;
+            this.toolStripGraphTools.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripGraphTools.ImageScalingSize = new System.Drawing.Size(28, 28);
             this.toolStripGraphTools.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonGraphZoomIn,
@@ -838,9 +840,9 @@
             this.toolStripButtonGraphFullView,
             this.toolStripButtonGraphSave});
             this.toolStripGraphTools.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.toolStripGraphTools.Location = new System.Drawing.Point(871, 0);
+            this.toolStripGraphTools.Location = new System.Drawing.Point(870, 0);
             this.toolStripGraphTools.Name = "toolStripGraphTools";
-            this.toolStripGraphTools.Size = new System.Drawing.Size(129, 34);
+            this.toolStripGraphTools.Size = new System.Drawing.Size(130, 34);
             this.toolStripGraphTools.TabIndex = 17;
             this.toolStripGraphTools.Text = "toolStripGraph";
             // 
@@ -884,13 +886,24 @@
             this.toolStripButtonGraphSave.Text = "Сохранить график";
             this.toolStripButtonGraphSave.Click += new System.EventHandler(this.toolStripButtonGraphSave_Click);
             // 
+            // hScrollBarGraph
+            // 
+            this.hScrollBarGraph.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.hScrollBarGraph.LargeChange = 1;
+            this.hScrollBarGraph.Location = new System.Drawing.Point(0, 0);
+            this.hScrollBarGraph.Maximum = 0;
+            this.hScrollBarGraph.Name = "hScrollBarGraph";
+            this.hScrollBarGraph.Size = new System.Drawing.Size(870, 34);
+            this.hScrollBarGraph.TabIndex = 5;
+            this.hScrollBarGraph.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar1_Scroll);
+            // 
             // tabPageTimeSpeed
             // 
             this.tabPageTimeSpeed.Controls.Add(this.zedGraphControlTimeSpeed);
             this.tabPageTimeSpeed.Location = new System.Drawing.Point(4, 22);
             this.tabPageTimeSpeed.Name = "tabPageTimeSpeed";
             this.tabPageTimeSpeed.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTimeSpeed.Size = new System.Drawing.Size(1012, 688);
+            this.tabPageTimeSpeed.Size = new System.Drawing.Size(1012, 686);
             this.tabPageTimeSpeed.TabIndex = 4;
             this.tabPageTimeSpeed.Text = "Время - частота вращения";
             this.tabPageTimeSpeed.UseVisualStyleBackColor = true;
@@ -907,7 +920,7 @@
             this.zedGraphControlTimeSpeed.ScrollMinX = 0D;
             this.zedGraphControlTimeSpeed.ScrollMinY = 0D;
             this.zedGraphControlTimeSpeed.ScrollMinY2 = 0D;
-            this.zedGraphControlTimeSpeed.Size = new System.Drawing.Size(1006, 682);
+            this.zedGraphControlTimeSpeed.Size = new System.Drawing.Size(1006, 680);
             this.zedGraphControlTimeSpeed.TabIndex = 1;
             // 
             // tabPageTimeAcceleration
@@ -916,7 +929,7 @@
             this.tabPageTimeAcceleration.Location = new System.Drawing.Point(4, 22);
             this.tabPageTimeAcceleration.Name = "tabPageTimeAcceleration";
             this.tabPageTimeAcceleration.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTimeAcceleration.Size = new System.Drawing.Size(1012, 688);
+            this.tabPageTimeAcceleration.Size = new System.Drawing.Size(1012, 686);
             this.tabPageTimeAcceleration.TabIndex = 1;
             this.tabPageTimeAcceleration.Text = "Время - ускорение";
             this.tabPageTimeAcceleration.UseVisualStyleBackColor = true;
@@ -933,7 +946,7 @@
             this.zedGraphControlTimeAcceleration.ScrollMinX = 0D;
             this.zedGraphControlTimeAcceleration.ScrollMinY = 0D;
             this.zedGraphControlTimeAcceleration.ScrollMinY2 = 0D;
-            this.zedGraphControlTimeAcceleration.Size = new System.Drawing.Size(1006, 682);
+            this.zedGraphControlTimeAcceleration.Size = new System.Drawing.Size(1006, 680);
             this.zedGraphControlTimeAcceleration.TabIndex = 0;
             // 
             // tabPageSpeedAcceleration
@@ -941,7 +954,7 @@
             this.tabPageSpeedAcceleration.Controls.Add(this.zedGraphControlSpeedAcceleration);
             this.tabPageSpeedAcceleration.Location = new System.Drawing.Point(4, 22);
             this.tabPageSpeedAcceleration.Name = "tabPageSpeedAcceleration";
-            this.tabPageSpeedAcceleration.Size = new System.Drawing.Size(1012, 688);
+            this.tabPageSpeedAcceleration.Size = new System.Drawing.Size(1012, 686);
             this.tabPageSpeedAcceleration.TabIndex = 2;
             this.tabPageSpeedAcceleration.Text = "Частота врещения - ускорение";
             this.tabPageSpeedAcceleration.UseVisualStyleBackColor = true;
@@ -958,7 +971,7 @@
             this.zedGraphControlSpeedAcceleration.ScrollMinX = 0D;
             this.zedGraphControlSpeedAcceleration.ScrollMinY = 0D;
             this.zedGraphControlSpeedAcceleration.ScrollMinY2 = 0D;
-            this.zedGraphControlSpeedAcceleration.Size = new System.Drawing.Size(1012, 688);
+            this.zedGraphControlSpeedAcceleration.Size = new System.Drawing.Size(1012, 686);
             this.zedGraphControlSpeedAcceleration.TabIndex = 1;
             // 
             // tabPageReport
@@ -966,7 +979,7 @@
             this.tabPageReport.Controls.Add(this.richTextBoxReport);
             this.tabPageReport.Location = new System.Drawing.Point(4, 22);
             this.tabPageReport.Name = "tabPageReport";
-            this.tabPageReport.Size = new System.Drawing.Size(1012, 688);
+            this.tabPageReport.Size = new System.Drawing.Size(1012, 686);
             this.tabPageReport.TabIndex = 3;
             this.tabPageReport.Text = "Отчёт";
             this.tabPageReport.UseVisualStyleBackColor = true;
@@ -977,7 +990,7 @@
             this.richTextBoxReport.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.richTextBoxReport.Location = new System.Drawing.Point(0, 0);
             this.richTextBoxReport.Name = "richTextBoxReport";
-            this.richTextBoxReport.Size = new System.Drawing.Size(1012, 688);
+            this.richTextBoxReport.Size = new System.Drawing.Size(1012, 686);
             this.richTextBoxReport.TabIndex = 0;
             this.richTextBoxReport.Text = "";
             this.richTextBoxReport.WordWrap = false;
@@ -988,7 +1001,7 @@
             this.tabPageTimeSpeedAcc.Location = new System.Drawing.Point(4, 22);
             this.tabPageTimeSpeedAcc.Name = "tabPageTimeSpeedAcc";
             this.tabPageTimeSpeedAcc.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTimeSpeedAcc.Size = new System.Drawing.Size(1012, 688);
+            this.tabPageTimeSpeedAcc.Size = new System.Drawing.Size(1012, 686);
             this.tabPageTimeSpeedAcc.TabIndex = 5;
             this.tabPageTimeSpeedAcc.Text = "Время - скорость + ускорение";
             this.tabPageTimeSpeedAcc.UseVisualStyleBackColor = true;
@@ -1005,7 +1018,7 @@
             this.zedGraphControlTimeSpeedAcc.ScrollMinX = 0D;
             this.zedGraphControlTimeSpeedAcc.ScrollMinY = 0D;
             this.zedGraphControlTimeSpeedAcc.ScrollMinY2 = 0D;
-            this.zedGraphControlTimeSpeedAcc.Size = new System.Drawing.Size(1006, 682);
+            this.zedGraphControlTimeSpeedAcc.Size = new System.Drawing.Size(1006, 680);
             this.zedGraphControlTimeSpeedAcc.TabIndex = 2;
             // 
             // saveFileDialogGraph
@@ -1024,7 +1037,6 @@
             this.Controls.Add(this.splitContainerMain);
             this.Controls.Add(this.toolStripMainMenu);
             this.Controls.Add(this.menuStrip1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
@@ -1116,6 +1128,12 @@
         private System.Windows.Forms.RichTextBox richTextBoxReport;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelGraphMain;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelScroll;
+        private System.Windows.Forms.ToolStrip toolStripGraphTools;
+        private System.Windows.Forms.ToolStripButton toolStripButtonGraphZoomIn;
+        private System.Windows.Forms.ToolStripButton toolStripButtonGraphZoomOut;
+        private System.Windows.Forms.ToolStripButton toolStripButtonGraphFullView;
+        private System.Windows.Forms.ToolStripButton toolStripButtonGraphSave;
+        private System.Windows.Forms.HScrollBar hScrollBarGraph;
         private Tao.Platform.Windows.SimpleOpenGlControl OpenGlControlGraph;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox pictureBoxGraphData;
@@ -1142,12 +1160,7 @@
         private WindowsExplorer.ExplorerTree explorerTreeMain;
         private System.Windows.Forms.TabPage tabPageTimeSpeedAcc;
         private ZedGraph.ZedGraphControl zedGraphControlTimeSpeedAcc;
-        private System.Windows.Forms.ToolStrip toolStripGraphTools;
-        private System.Windows.Forms.ToolStripButton toolStripButtonGraphZoomIn;
-        private System.Windows.Forms.ToolStripButton toolStripButtonGraphZoomOut;
-        private System.Windows.Forms.ToolStripButton toolStripButtonGraphFullView;
-        private System.Windows.Forms.ToolStripButton toolStripButtonGraphSave;
-        private System.Windows.Forms.HScrollBar hScrollBarGraph;
+        private System.Windows.Forms.ToolStripComboBox toolStripComboBoxSelectTypeSeach;
     }
 }
 
