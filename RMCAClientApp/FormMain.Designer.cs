@@ -35,6 +35,8 @@
             this.menuShowGrap = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemSaveGraph = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemCalc = new System.Windows.Forms.ToolStripMenuItem();
+            this.addEventsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.FilterDataSourceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ReCalcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.findEventsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemSaveReportAs = new System.Windows.Forms.ToolStripMenuItem();
@@ -84,7 +86,6 @@
             this.saveFileReportDialog = new System.Windows.Forms.SaveFileDialog();
             this.splitContainerMain = new System.Windows.Forms.SplitContainer();
             this.splitContainerTreeFilePath = new System.Windows.Forms.SplitContainer();
-            this.explorerTreeMain = new WindowsExplorer.ExplorerTree();
             this.dataGridViewFiles = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -113,7 +114,14 @@
             this.richTextBoxReport = new System.Windows.Forms.RichTextBox();
             this.tabPageTimeSpeedAcc = new System.Windows.Forms.TabPage();
             this.zedGraphControlTimeSpeedAcc = new ZedGraph.ZedGraphControl();
+            this.tabPageFilter = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanelFilterTop = new System.Windows.Forms.TableLayoutPanel();
             this.saveFileDialogGraph = new System.Windows.Forms.SaveFileDialog();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.zedGraphControlSource = new ZedGraph.ZedGraphControl();
+            this.zedGraphControlFiltered = new ZedGraph.ZedGraphControl();
+            this.explorerTreeMain = new WindowsExplorer.ExplorerTree();
             this.menuStrip1.SuspendLayout();
             this.toolStripMainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
@@ -137,6 +145,10 @@
             this.tabPageSpeedAcceleration.SuspendLayout();
             this.tabPageReport.SuspendLayout();
             this.tabPageTimeSpeedAcc.SuspendLayout();
+            this.tabPageFilter.SuspendLayout();
+            this.tableLayoutPanelFilterTop.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -159,6 +171,8 @@
             this.menuShowGrap,
             this.ToolStripMenuItemSaveGraph,
             this.ToolStripMenuItemCalc,
+            this.addEventsToolStripMenuItem,
+            this.FilterDataSourceToolStripMenuItem,
             this.ReCalcToolStripMenuItem,
             this.findEventsToolStripMenuItem,
             this.ToolStripMenuItemSaveReportAs,
@@ -190,6 +204,22 @@
             this.ToolStripMenuItemCalc.Size = new System.Drawing.Size(274, 22);
             this.ToolStripMenuItemCalc.Text = "Вычислить";
             this.ToolStripMenuItemCalc.Click += new System.EventHandler(this.calcToolStripMenuItem_Click);
+            // 
+            // addEventsToolStripMenuItem
+            // 
+            this.addEventsToolStripMenuItem.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.addEventsToolStripMenuItem.Name = "addEventsToolStripMenuItem";
+            this.addEventsToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+            this.addEventsToolStripMenuItem.Text = "Добавить События";
+            this.addEventsToolStripMenuItem.Click += new System.EventHandler(this.addEventsToolStripMenuItem_Click);
+            // 
+            // FilterDataSourceToolStripMenuItem
+            // 
+            this.FilterDataSourceToolStripMenuItem.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.FilterDataSourceToolStripMenuItem.Name = "FilterDataSourceToolStripMenuItem";
+            this.FilterDataSourceToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+            this.FilterDataSourceToolStripMenuItem.Text = "Фильрация исходных данных";
+            this.FilterDataSourceToolStripMenuItem.Click += new System.EventHandler(this.FilterDataSourceToolStripMenuItem_Click);
             // 
             // ReCalcToolStripMenuItem
             // 
@@ -614,9 +644,9 @@
             this.toolStripComboBoxSelectTypeSeach.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.toolStripComboBoxSelectTypeSeach.Items.AddRange(new object[] {
             "Поиск событий по мин. и мак.",
-            "Поиск событий по второму каналу"});
+            "Поиск событий по оптическому и пъезо датчику"});
             this.toolStripComboBoxSelectTypeSeach.Name = "toolStripComboBoxSelectTypeSeach";
-            this.toolStripComboBoxSelectTypeSeach.Size = new System.Drawing.Size(250, 23);
+            this.toolStripComboBoxSelectTypeSeach.Size = new System.Drawing.Size(300, 23);
             this.toolStripComboBoxSelectTypeSeach.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxSelectTypeSeach_SelectedIndexChanged);
             // 
             // saveFileReportDialog
@@ -662,23 +692,6 @@
             this.splitContainerTreeFilePath.Size = new System.Drawing.Size(252, 712);
             this.splitContainerTreeFilePath.SplitterDistance = 422;
             this.splitContainerTreeFilePath.TabIndex = 0;
-            // 
-            // explorerTreeMain
-            // 
-            this.explorerTreeMain.BackColor = System.Drawing.Color.White;
-            this.explorerTreeMain.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.explorerTreeMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.explorerTreeMain.Location = new System.Drawing.Point(0, 0);
-            this.explorerTreeMain.Name = "explorerTreeMain";
-            this.explorerTreeMain.SelectedPath = "C:\\Program Files\\Microsoft Visual Studio 10.0\\Common7\\IDE";
-            this.explorerTreeMain.ShowAddressbar = true;
-            this.explorerTreeMain.ShowMyDocuments = true;
-            this.explorerTreeMain.ShowMyFavorites = true;
-            this.explorerTreeMain.ShowMyNetwork = true;
-            this.explorerTreeMain.ShowToolbar = true;
-            this.explorerTreeMain.Size = new System.Drawing.Size(252, 422);
-            this.explorerTreeMain.TabIndex = 0;
-            this.explorerTreeMain.PathChanged += new WindowsExplorer.ExplorerTree.PathChangedEventHandler(this.explorerTreeMain_PathChanged);
             // 
             // dataGridViewFiles
             // 
@@ -739,6 +752,7 @@
             this.tabControlMain.Controls.Add(this.tabPageSpeedAcceleration);
             this.tabControlMain.Controls.Add(this.tabPageReport);
             this.tabControlMain.Controls.Add(this.tabPageTimeSpeedAcc);
+            this.tabControlMain.Controls.Add(this.tabPageFilter);
             this.tabControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlMain.Location = new System.Drawing.Point(0, 0);
             this.tabControlMain.Name = "tabControlMain";
@@ -1021,12 +1035,106 @@
             this.zedGraphControlTimeSpeedAcc.Size = new System.Drawing.Size(1006, 680);
             this.zedGraphControlTimeSpeedAcc.TabIndex = 2;
             // 
+            // tabPageFilter
+            // 
+            this.tabPageFilter.Controls.Add(this.tableLayoutPanelFilterTop);
+            this.tabPageFilter.Location = new System.Drawing.Point(4, 22);
+            this.tabPageFilter.Name = "tabPageFilter";
+            this.tabPageFilter.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageFilter.Size = new System.Drawing.Size(1012, 686);
+            this.tabPageFilter.TabIndex = 6;
+            this.tabPageFilter.Text = "Фильтрация данных";
+            this.tabPageFilter.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanelFilterTop
+            // 
+            this.tableLayoutPanelFilterTop.ColumnCount = 1;
+            this.tableLayoutPanelFilterTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelFilterTop.Controls.Add(this.panel3, 0, 1);
+            this.tableLayoutPanelFilterTop.Controls.Add(this.panel2, 0, 0);
+            this.tableLayoutPanelFilterTop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelFilterTop.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanelFilterTop.Name = "tableLayoutPanelFilterTop";
+            this.tableLayoutPanelFilterTop.RowCount = 2;
+            this.tableLayoutPanelFilterTop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanelFilterTop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanelFilterTop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanelFilterTop.Size = new System.Drawing.Size(1006, 680);
+            this.tableLayoutPanelFilterTop.TabIndex = 0;
+            // 
             // saveFileDialogGraph
             // 
             this.saveFileDialogGraph.DefaultExt = "bmp";
             this.saveFileDialogGraph.FileName = "bmp";
             this.saveFileDialogGraph.Filter = "bmp files|*.bmp";
             this.saveFileDialogGraph.RestoreDirectory = true;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.zedGraphControlSource);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(3, 3);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(1000, 334);
+            this.panel2.TabIndex = 2;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.zedGraphControlFiltered);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(3, 343);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(1000, 334);
+            this.panel3.TabIndex = 2;
+            // 
+            // zedGraphControlSource
+            // 
+            this.zedGraphControlSource.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.zedGraphControlSource.Location = new System.Drawing.Point(0, 0);
+            this.zedGraphControlSource.Name = "zedGraphControlSource";
+            this.zedGraphControlSource.ScrollGrace = 0D;
+            this.zedGraphControlSource.ScrollMaxX = 0D;
+            this.zedGraphControlSource.ScrollMaxY = 0D;
+            this.zedGraphControlSource.ScrollMaxY2 = 0D;
+            this.zedGraphControlSource.ScrollMinX = 0D;
+            this.zedGraphControlSource.ScrollMinY = 0D;
+            this.zedGraphControlSource.ScrollMinY2 = 0D;
+            this.zedGraphControlSource.Size = new System.Drawing.Size(1000, 334);
+            this.zedGraphControlSource.TabIndex = 0;
+            this.zedGraphControlSource.ZoomEvent += new ZedGraph.ZedGraphControl.ZoomEventHandler(this.zedGraphControlSource_ZoomEvent);
+            // 
+            // zedGraphControlFiltered
+            // 
+            this.zedGraphControlFiltered.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.zedGraphControlFiltered.Location = new System.Drawing.Point(0, 0);
+            this.zedGraphControlFiltered.Name = "zedGraphControlFiltered";
+            this.zedGraphControlFiltered.ScrollGrace = 0D;
+            this.zedGraphControlFiltered.ScrollMaxX = 0D;
+            this.zedGraphControlFiltered.ScrollMaxY = 0D;
+            this.zedGraphControlFiltered.ScrollMaxY2 = 0D;
+            this.zedGraphControlFiltered.ScrollMinX = 0D;
+            this.zedGraphControlFiltered.ScrollMinY = 0D;
+            this.zedGraphControlFiltered.ScrollMinY2 = 0D;
+            this.zedGraphControlFiltered.Size = new System.Drawing.Size(1000, 334);
+            this.zedGraphControlFiltered.TabIndex = 0;
+            this.zedGraphControlFiltered.ZoomEvent += new ZedGraph.ZedGraphControl.ZoomEventHandler(this.zedGraphControlFiltered_ZoomEvent);
+            // 
+            // explorerTreeMain
+            // 
+            this.explorerTreeMain.BackColor = System.Drawing.Color.White;
+            this.explorerTreeMain.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.explorerTreeMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.explorerTreeMain.Location = new System.Drawing.Point(0, 0);
+            this.explorerTreeMain.Name = "explorerTreeMain";
+            this.explorerTreeMain.SelectedPath = "C:\\Program Files\\Microsoft Visual Studio 10.0\\Common7\\IDE";
+            this.explorerTreeMain.ShowAddressbar = true;
+            this.explorerTreeMain.ShowMyDocuments = true;
+            this.explorerTreeMain.ShowMyFavorites = true;
+            this.explorerTreeMain.ShowMyNetwork = true;
+            this.explorerTreeMain.ShowToolbar = true;
+            this.explorerTreeMain.Size = new System.Drawing.Size(252, 422);
+            this.explorerTreeMain.TabIndex = 0;
+            this.explorerTreeMain.PathChanged += new WindowsExplorer.ExplorerTree.PathChangedEventHandler(this.explorerTreeMain_PathChanged);
             // 
             // FormMain
             // 
@@ -1037,6 +1145,7 @@
             this.Controls.Add(this.splitContainerMain);
             this.Controls.Add(this.toolStripMainMenu);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
@@ -1069,6 +1178,10 @@
             this.tabPageSpeedAcceleration.ResumeLayout(false);
             this.tabPageReport.ResumeLayout(false);
             this.tabPageTimeSpeedAcc.ResumeLayout(false);
+            this.tabPageFilter.ResumeLayout(false);
+            this.tableLayoutPanelFilterTop.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1161,6 +1274,14 @@
         private System.Windows.Forms.TabPage tabPageTimeSpeedAcc;
         private ZedGraph.ZedGraphControl zedGraphControlTimeSpeedAcc;
         private System.Windows.Forms.ToolStripComboBox toolStripComboBoxSelectTypeSeach;
+        private System.Windows.Forms.ToolStripMenuItem addEventsToolStripMenuItem;
+        private System.Windows.Forms.TabPage tabPageFilter;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelFilterTop;
+        private System.Windows.Forms.ToolStripMenuItem FilterDataSourceToolStripMenuItem;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panel3;
+        private ZedGraph.ZedGraphControl zedGraphControlFiltered;
+        private ZedGraph.ZedGraphControl zedGraphControlSource;
     }
 }
 

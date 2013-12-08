@@ -103,8 +103,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="calculation\ClassFilter.cs" />
+    <Compile Include="calculation\KIXFilter.cs" />
     <Compile Include="calculation\PointFunc.cs" />
     <Compile Include="calculation\TypeAlgorithmFindingPeriods.cs" />
+    <Compile Include="FormFilterConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormFilterConfig.Designer.cs">
+      <DependentUpon>FormFilterConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormPickEvents.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPickEvents.Designer.cs">
+      <DependentUpon>FormPickEvents.cs</DependentUpon>
+    </Compile>
     <Compile Include="graphicks\ZedGraphHelper.cs" />
     <Compile Include="statesWork.cs" />
     <Compile Include="calculation\ClassCalc.cs" />
@@ -124,8 +138,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormFilterConfig.resx">
+      <DependentUpon>FormFilterConfig.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPickEvents.resx">
+      <DependentUpon>FormPickEvents.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormProgressBar.resx">
       <DependentUpon>FormProgressBar.cs</DependentUpon>

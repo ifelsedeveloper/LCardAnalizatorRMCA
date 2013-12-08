@@ -19,7 +19,7 @@ namespace WindowsFormsGraphickOpenGL
 
         double median_vu;   //среднее значения датчика частоты вращения
         int kol_front_vu;   //количество точек пересечения со средней линией
-        double [] front_vu; //фронты (точки пересечения)
+        public double [] front_vu; //фронты (точки пересечения)
 
         double[] front_period; //фронты (точки пересечения)
 
@@ -459,6 +459,7 @@ namespace WindowsFormsGraphickOpenGL
                 min_loc_ac[j] = res.y;
             }
 
+            //находим значения пъезо датчика
         }
 
         PointFunc GetValueFunc(double t,double [] x, double [] y)
@@ -502,6 +503,13 @@ namespace WindowsFormsGraphickOpenGL
                 GetVuGauss(in_gaussB);
             GetAcceleration();
             
+        }
+
+        public void CalculateDegree(ClassRecord __record)
+        {
+            record = __record;
+            GetMedianVu();
+            GetFrontVu();
         }
 
         public void Calculate3(ClassRecord __record, int in_with_diff, int in_OutStep, int in_InStep, bool flagVu, int in_Number_zub, double in_gaussB, int in_TypeSmooth)

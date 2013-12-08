@@ -36,11 +36,70 @@ namespace LCardAnalizator.graphicks
             // Включаем отображение сетки напротив мелких рисок по оси X
             myPane.YAxis.MinorGrid.IsVisible = true;
 
-            LineItem myCurve = myPane.AddCurve(name, x, y, System.Drawing.Color.Green, SymbolType.None);
+            LineItem myCurve = myPane.AddCurve(name, x, y, System.Drawing.Color.Blue, SymbolType.None);
 
             // Tell ZedGraph to refigure the
             // axes since the data have changed
+            zgc.ZoomOutAll(myPane);
+            zgc.AxisChange();
+            zgc.Invalidate();
+        }
 
+
+        public static void CreateGraph(ref ZedGraphControl zgc,
+            ref double[] x,
+            string label_x,
+            ref double[] y,
+            string label_y,
+            int n,
+            ref double[] xPoints,
+            ref double[] yPoints,
+            string name,
+            string title)
+        {
+            // get a reference to the GraphPane
+            GraphPane myPane = zgc.GraphPane;
+            // Очистим список кривых на тот случай, если до этого сигналы уже были нарисованы
+            myPane.CurveList.Clear();
+
+            {
+                LineItem myCurveSup = myPane.AddCurve("События", xPoints, yPoints, System.Drawing.Color.Red, SymbolType.Circle);
+
+                // !!!
+                // У кривой линия будет невидимой
+                myCurveSup.Line.IsVisible = false;
+
+                // !!!
+                // Цвет заполнения отметок (ромбиков) - колубой
+                myCurveSup.Symbol.Fill.Color = System.Drawing.Color.Red;
+
+                // !!!
+                // Тип заполнения - сплошная заливка
+                myCurveSup.Symbol.Fill.Type = FillType.Solid;
+
+                // !!!
+                // Размер ромбиков
+                myCurveSup.Symbol.Size = 14;
+            }
+
+            // Set the Titles
+            myPane.Title.Text = title;
+            myPane.XAxis.Title.Text = label_x;
+            myPane.YAxis.Title.Text = label_y;
+            // Make up some data arrays based on the Sine function
+
+            // Включаем отображение сетки напротив крупных рисок по оси Y
+            myPane.YAxis.MajorGrid.IsVisible = true;
+
+
+            // Включаем отображение сетки напротив мелких рисок по оси X
+            myPane.YAxis.MinorGrid.IsVisible = true;
+
+            LineItem myCurve = myPane.AddCurve(name, x, y, System.Drawing.Color.Blue, SymbolType.None);
+
+            // Tell ZedGraph to refigure the
+            // axes since the data have changed
+            zgc.ZoomOutAll(myPane);
             zgc.AxisChange();
             zgc.Invalidate();
         }
@@ -97,6 +156,7 @@ namespace LCardAnalizator.graphicks
 
             // get a reference to the GraphPane
             GraphPane myPane = zgc.GraphPane;
+            
             // Set the Titles
             myPane.Title.Text = title;
             myPane.XAxis.Title.Text = label_x;
@@ -119,7 +179,7 @@ namespace LCardAnalizator.graphicks
 
             // Tell ZedGraph to refigure the
             // axes since the data have changed
-
+            zgc.ZoomOutAll(myPane);
             zgc.AxisChange();
             zgc.Invalidate();
 
@@ -332,6 +392,57 @@ namespace LCardAnalizator.graphicks
 
             zgc.AxisChange();
             zgc.Invalidate();
+        }
+
+        public static void AppendEventsToGraph(ref ZedGraphControl zgc,
+            double[] x,
+            double[] y)
+        {
+            if (y != null)
+            {
+                // Получим панель для рисования
+                GraphPane pane = zgc.GraphPane;
+
+                // Создадим список точек
+                PointPairList list = new PointPairList();
+
+                // Заполняем список точек
+                for (int i = 0; i < x.Length; i++)
+                {
+                    list.Add(x[i], y[i]);
+                }
+
+                // !!!
+                // Создадим кривую с названием "Scatter".
+                // Обводка ромбиков будут рисоваться голубым цветом (Color.Blue),
+                // Опорные точки - ромбики (SymbolType.Diamond)
+                
+                LineItem myCurve = pane.AddCurve("События", list, System.Drawing.Color.Red, SymbolType.Diamond);
+
+                // !!!
+                // У кривой линия будет невидимой
+                myCurve.Line.IsVisible = false;
+
+                // !!!
+                // Цвет заполнения отметок (ромбиков) - колубой
+                myCurve.Symbol.Fill.Color = System.Drawing.Color.Red;
+
+                // !!!
+                // Тип заполнения - сплошная заливка
+                myCurve.Symbol.Fill.Type = FillType.Solid;
+
+                // !!!
+                // Размер ромбиков
+                myCurve.Symbol.Size = 20;
+
+                // Вызываем метод AxisChange (), чтобы обновить данные об осях. 
+                // В противном случае на рисунке будет показана только часть графика, 
+                // которая умещается в интервалы по осям, установленные по умолчанию
+                zgc.AxisChange();
+
+                // Обновляем график
+                zgc.Invalidate();
+            }
         }
     }
 }

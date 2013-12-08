@@ -723,9 +723,37 @@ namespace Record
                 for (j = 0; j < NumberOfChannels; j++)
                     ch[j][i] = Convert.ToDouble(spline2[j + 1], info);
             }
-
+            //for (int i = 1; i < ch[2].Count()-1; i++)
+            //{
+            //    ch[i] = ch[i-1]*0.85 + ch[i]
+            //}
+            //DateTime time1, time2;
+            //time1 = DateTime.Now;
+            //double sum_numerator, val;
+            //int count = 4;
+            //for (int i = count; i < ch[2].Count() - count; i++)
+            //{
+            //    sum_numerator = 0;
+            //    for (j = i - count; j < i + count; j++)
+            //    {
+            //        sum_numerator += ch[2][j];
+            //    }
+            //    val = sum_numerator / (count * 2);
+            //    if (ch[2][i] < val * 2.5) ch[2][i] = val;
+            //}
+            //time2 = DateTime.Now;
+            //double seconds = (time2 - time1).TotalSeconds;
             file.Close();
             return true;
+        }
+        public double gaussB = 0.02;
+        double p1 = 1.0 / Math.Sqrt(2 * Math.PI) * 0.37;
+        double p2 = -1.0 / (2.0 * 0.37 * 0.37);
+        double gaussK(double t)
+        {
+            double res;
+            res = p1 * Math.Exp(t * t * p2);
+            return res;
         }
 
         public bool ValidateReadHeadInCommonFormat(string path)

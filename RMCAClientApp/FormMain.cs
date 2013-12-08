@@ -25,6 +25,8 @@ using System.Xml;
 using System.Drawing.Drawing2D;
 using System.Diagnostics;
 using LCardAnalizator.graphicks;
+using LCardAnalizator;
+using LCardAnalizator.calculation;
 
 
 namespace WindowsFormsGraphickOpenGL
@@ -95,6 +97,7 @@ namespace WindowsFormsGraphickOpenGL
             tabControlMain.TabPages.Remove(tabPageReport);
             tabControlMain.TabPages.Remove(tabPageTimeSpeed);
             tabControlMain.TabPages.Remove(tabPageTimeSpeedAcc);
+            tabControlMain.TabPages.Remove(tabPageFilter);
         }
 
         int posX_window;
@@ -1201,7 +1204,7 @@ namespace WindowsFormsGraphickOpenGL
                     }
                     else
                     {
-                        name_minum = "Синхроимпульс";
+                        name_minum = "Оптический";
                         ZedGraphHelper.AppendEventsToGraph(ref zedGraphControlTimeSpeed, null, null, calc_record.t_min_loc, calc_record.min_loc, null, null,name_minum);
                         ZedGraphHelper.AppendEventsToGraph(ref zedGraphControlTimeAcceleration, null, null, calc_record.t_min_loc, calc_record.min_loc_ac, null, null, name_minum);
                     }
@@ -1310,7 +1313,6 @@ namespace WindowsFormsGraphickOpenGL
             if (bw.CancellationPending == true) { this.Enabled = true; return; }
             if (e.ProgressPercentage == statesWork.startRead)
             {
-
                 progressForm.setProgress(e.ProgressPercentage, "Ввод данных и построение графиков");
             }
 
@@ -1756,6 +1758,147 @@ namespace WindowsFormsGraphickOpenGL
         private void ToolStripMenuItemAbout_Click(object sender, EventArgs e)
         {
             MessageBox.Show("RMCA " + Assembly.GetExecutingAssembly().GetName().Version.ToString());
+        }
+
+        FormPickEvents formEvevnts = new FormPickEvents();
+        int manualStep;
+        int manualStartPoint;
+        double[] xPoints;
+        double[] yPoints;
+        bool isAddedEvents = false;
+        //add events manually
+        private void addEventsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //show dialog
+            DialogResult res = formEvevnts.ShowDialog();
+            if (res == DialogResult.OK)
+            {
+                //setup events
+                manualStartPoint = formEvevnts.StartPoint;
+                manualStep = formEvevnts.Step;
+
+                //show events
+                if(record!= null && flag_record && flag_graph)
+                {
+                    //calculate points
+                    if (calc_record == null)
+                        calc_record = new ClassCalc();
+                    calc_record.CalculateDegree(record);
+
+                    int numberPoints = Convert.ToInt32((calc_record.front_vu.LongLength - manualStartPoint) / manualStep); 
+                    xPoints = new double[numberPoints];
+                    yPoints = new double[numberPoints];
+
+                    for(int i = 0; i < numberPoints; i++)
+                    {
+                        xPoints[i] = calc_record.front_vu[manualStartPoint + i * manualStep];
+                        yPoints[i] = 0;
+                    }
+                    cl2d.DrawEvents(xPoints, yPoints, 2);
+
+                    ZedGraphHelper.CreateGraph(ref zedGraphControlSource, ref record.time, "Время, сек", ref record.ch[nChannel - 1], "", record.KadrsNumber,ref xPoints, ref yPoints, "", "График исходных данных");
+                    ZedGraphHelper.CreateGraph(ref zedGraphControlFiltered, ref record.time, "Время, сек", ref filterY, "", record.KadrsNumber,ref xPoints, ref yPoints, "", "График отфильтрованных данных");
+
+                    isAddedEvents = true;
+                    OpenGlControlGraph.Invalidate();
+                    zedGraphControlFiltered.Invalidate();
+                    zedGraphControlSource.Invalidate();
+                }
+            }
+        }
+
+
+        //задание фильрации 
+
+        FormFilterConfig formFilter = new FormFilterConfig();
+        int typeFilter;
+        int nChannel;
+        bool flag_filtered = false;
+        void backWorkerFilter_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            this.Invoke(new Action(() => Filter()));
+        }
+
+        private void FilterDataSourceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!flag_record)
+            {
+                CreateBackgroundWorker(bw_DoWorkShowGraph);
+                bw.RunWorkerCompleted += backWorkerFilter_RunWorkerCompleted;
+                launchBgWorker();
+            }
+            else
+                Filter();
+        }
+
+        double[] filterY;
+        void Filter()
+        {
+            if (flag_record)
+            {
+                formFilter.maxChannels = record.NumberOfChannels;
+                DialogResult dialogRes = formFilter.ShowDialog();
+                tabControlMain.TabPages.Remove(tabPageFilter);
+                if (dialogRes == DialogResult.OK)
+                {
+                    typeFilter = formFilter.typeFilter;
+                    nChannel = formFilter.numberChannel;
+
+                    //calculate filter
+                    filterY = ClassFilter.filterSmooth(record.time, record.ch[nChannel - 1]);
+
+                    //create graphics
+
+                    tabControlMain.TabPages.Add(tabPageFilter);
+                    ZedGraphHelper.CreateGraph(ref zedGraphControlSource, ref record.time, "Время, сек", ref record.ch[nChannel - 1], "", record.KadrsNumber, "", "График исходных данных");
+                    ZedGraphHelper.CreateGraph(ref zedGraphControlFiltered, ref record.time, "Время, сек", ref filterY, "", record.KadrsNumber, "", "График отфильтрованных данных");
+                    flag_filtered = true;
+                }
+                else
+                    flag_filtered = false;
+            }
+        }
+
+        private void zedGraphControlSource_ZoomEvent(ZedGraphControl sender, ZoomState oldState, ZoomState newState)
+        {
+            GraphPane pane ;
+
+            using (var g = sender.CreateGraphics())
+                pane = sender.MasterPane.FindPane(sender.PointToClient(MousePosition));
+
+            // The excludedGraphPane has to remain independant
+            if (pane == null || sender == zedGraphControlFiltered)
+                return;
+
+
+            GraphPane penFiltered = zedGraphControlFiltered.GraphPane;
+            penFiltered.XAxis.Scale.Min = pane.XAxis.Scale.Min;
+            penFiltered.XAxis.Scale.Max = pane.XAxis.Scale.Max;
+            penFiltered.YAxis.Scale.Min = pane.YAxis.Scale.Min;
+            penFiltered.YAxis.Scale.Max = pane.YAxis.Scale.Max;
+            penFiltered.AxisChange(); // Only necessary if one or more scale property is set to Auto.
+            zedGraphControlFiltered.Invalidate();
+        }
+
+        private void zedGraphControlFiltered_ZoomEvent(ZedGraphControl sender, ZoomState oldState, ZoomState newState)
+        {
+            GraphPane pane;
+
+            using (var g = sender.CreateGraphics())
+                pane = sender.MasterPane.FindPane(sender.PointToClient(MousePosition));
+
+            // The excludedGraphPane has to remain independant
+            if (pane == null || sender == zedGraphControlSource)
+                return;
+
+
+            GraphPane penFiltered = zedGraphControlSource.GraphPane;
+            penFiltered.XAxis.Scale.Min = pane.XAxis.Scale.Min;
+            penFiltered.XAxis.Scale.Max = pane.XAxis.Scale.Max;
+            penFiltered.YAxis.Scale.Min = pane.YAxis.Scale.Min;
+            penFiltered.YAxis.Scale.Max = pane.YAxis.Scale.Max;
+            penFiltered.AxisChange(); // Only necessary if one or more scale property is set to Auto.
+            zedGraphControlSource.Invalidate();
         }
 
 

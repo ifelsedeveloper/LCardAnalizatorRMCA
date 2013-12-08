@@ -723,7 +723,7 @@ namespace WindowsFormsGraphickOpenGL
                     }
                 }
             }
-
+            DrawEventsForChannel();
 
         }
 
@@ -756,16 +756,101 @@ namespace WindowsFormsGraphickOpenGL
                             x2 = tinf[i] + 3 * prx;
                             y1 = vinf[i] - 3 * pry;
                             y2 = vinf[i] + 3 * pry;
-                            Gl.glBegin(Gl.GL_LINE_LOOP);
-                            Gl.glVertex2d(x1, y1);
-                            Gl.glVertex2d(x2, y1);
-                            Gl.glVertex2d(x2, y2);
-                            Gl.glVertex2d(x1, y2);
-                            // завершаем режим рисования 
-                            Gl.glEnd();
+
+                            if (x1 >= min_x && x2 <= max_x)
+                            {
+                                Gl.glBegin(Gl.GL_LINE_LOOP);
+                                Gl.glVertex2d(x1, y1);
+                                Gl.glVertex2d(x2, y1);
+                                Gl.glVertex2d(x2, y2);
+                                Gl.glVertex2d(x1, y2);
+                                // завершаем режим рисования 
+                                Gl.glEnd();
+                            }
                         }
 
                         
+                        if (j == n - 1 && flag) break;
+                    }
+                }
+            }
+        }
+        int n_chevent;
+        public void DrawEvents(double[] tinf, double[] vinf, int n_chevent)
+        {
+            this.tinf = tinf;
+            this.vinf = vinf;
+            this.n_chevent = n_chevent;
+
+            Gl.glClearColor(255, 255, 255, 1);
+
+            // установка порта вывода в соотвествии с размерами элемента anT 
+            Gl.glViewport(0, 0, width, height);
+
+            // настройка проекции 
+            Gl.glMatrixMode(Gl.GL_PROJECTION);
+            Gl.glLoadIdentity();
+
+            Glu.gluOrtho2D(min_x - ddx, max_x + ddx, min_y - ddy, max_y + ddy);
+
+            //Glu.gluOrtho2D(0, 30, 0, 30);
+            Gl.glMatrixMode(Gl.GL_MODELVIEW);
+            // очищаем буфер цвета 
+            Gl.glClear(Gl.GL_COLOR_BUFFER_BIT);
+            Gl.glLoadIdentity();
+
+            //Init();
+            DrawSystem();
+            DrawFunc();
+            // дожидаемся конца визуализации кадра 
+            Gl.glFlush();
+
+
+        }
+
+        void DrawEventsForChannel()
+        {
+            if (vinf != null && vinf.Length > 0)
+            {
+                int i, j;
+
+                // очищаем текущую матрицу 
+                Gl.glLoadIdentity();
+                bool flag = false;
+
+                for (j = 0; j < n; j++)
+                {
+                    if (n_chevent == j)
+                    {
+                        // устанавливаем текущий цвет 
+                        Gl.glColor3f(colors_func[j][0], colors_func[j][1], colors_func[j][2]);
+                        Gl.glLineWidth(3);
+                        //Gl.glColor3i(0, 100, 0);
+                        // активируем режим рисования линий, на основе 
+                        // последовательного соединения всех вершин в отрезки 
+
+                        // первая вершина будет находиться в начале координат 
+
+                        for (i = 0; i < vinf.Length; i++)
+                        {
+                            double x1, x2, y1, y2;
+                            x1 = tinf[i] - 6 * prx;
+                            x2 = tinf[i] + 6 * prx;
+                            y1 = vinf[i] - 6 * pry;
+                            y2 = vinf[i] + 6 * pry;
+                            if (x1 >= min_x && x2 <= max_x)
+                            {
+                                Gl.glBegin(Gl.GL_LINE_LOOP);
+                                Gl.glVertex2d(x1, y1);
+                                Gl.glVertex2d(x2, y1);
+                                Gl.glVertex2d(x2, y2);
+                                Gl.glVertex2d(x1, y2);
+                                // завершаем режим рисования 
+                                Gl.glEnd();
+                            }
+                        }
+
+
                         if (j == n - 1 && flag) break;
                     }
                 }
