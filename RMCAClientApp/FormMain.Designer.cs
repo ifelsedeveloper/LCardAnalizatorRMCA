@@ -86,6 +86,7 @@
             this.saveFileReportDialog = new System.Windows.Forms.SaveFileDialog();
             this.splitContainerMain = new System.Windows.Forms.SplitContainer();
             this.splitContainerTreeFilePath = new System.Windows.Forms.SplitContainer();
+            this.explorerTreeMain = new WindowsExplorer.ExplorerTree();
             this.dataGridViewFiles = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -125,7 +126,6 @@
             this.tabPageDegreeAcc = new System.Windows.Forms.TabPage();
             this.zedGraphControlDegreeAcc = new ZedGraph.ZedGraphControl();
             this.saveFileDialogGraph = new System.Windows.Forms.SaveFileDialog();
-            this.explorerTreeMain = new WindowsExplorer.ExplorerTree();
             this.menuStrip1.SuspendLayout();
             this.toolStripMainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
@@ -699,6 +699,23 @@
             this.splitContainerTreeFilePath.SplitterDistance = 422;
             this.splitContainerTreeFilePath.TabIndex = 0;
             // 
+            // explorerTreeMain
+            // 
+            this.explorerTreeMain.BackColor = System.Drawing.Color.White;
+            this.explorerTreeMain.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.explorerTreeMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.explorerTreeMain.Location = new System.Drawing.Point(0, 0);
+            this.explorerTreeMain.Name = "explorerTreeMain";
+            this.explorerTreeMain.SelectedPath = "C:\\Program Files\\Microsoft Visual Studio 10.0\\Common7\\IDE";
+            this.explorerTreeMain.ShowAddressbar = true;
+            this.explorerTreeMain.ShowMyDocuments = true;
+            this.explorerTreeMain.ShowMyFavorites = true;
+            this.explorerTreeMain.ShowMyNetwork = true;
+            this.explorerTreeMain.ShowToolbar = true;
+            this.explorerTreeMain.Size = new System.Drawing.Size(252, 422);
+            this.explorerTreeMain.TabIndex = 0;
+            this.explorerTreeMain.PathChanged += new WindowsExplorer.ExplorerTree.PathChangedEventHandler(this.explorerTreeMain_PathChanged);
+            // 
             // dataGridViewFiles
             // 
             this.dataGridViewFiles.AllowUserToDeleteRows = false;
@@ -1179,23 +1196,6 @@
             this.saveFileDialogGraph.Filter = "bmp files|*.bmp";
             this.saveFileDialogGraph.RestoreDirectory = true;
             // 
-            // explorerTreeMain
-            // 
-            this.explorerTreeMain.BackColor = System.Drawing.Color.White;
-            this.explorerTreeMain.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.explorerTreeMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.explorerTreeMain.Location = new System.Drawing.Point(0, 0);
-            this.explorerTreeMain.Name = "explorerTreeMain";
-            this.explorerTreeMain.SelectedPath = "C:\\Program Files\\Microsoft Visual Studio 10.0\\Common7\\IDE";
-            this.explorerTreeMain.ShowAddressbar = true;
-            this.explorerTreeMain.ShowMyDocuments = true;
-            this.explorerTreeMain.ShowMyFavorites = true;
-            this.explorerTreeMain.ShowMyNetwork = true;
-            this.explorerTreeMain.ShowToolbar = true;
-            this.explorerTreeMain.Size = new System.Drawing.Size(252, 422);
-            this.explorerTreeMain.TabIndex = 0;
-            this.explorerTreeMain.PathChanged += new WindowsExplorer.ExplorerTree.PathChangedEventHandler(this.explorerTreeMain_PathChanged);
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1209,7 +1209,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "Анализатор вращетельного движение";
+            this.Text = "Анализатор вращетельного движения";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMain_FormClosed);
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.menuStrip1.ResumeLayout(false);
