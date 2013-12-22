@@ -35,6 +35,8 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.buttonOkFilter = new System.Windows.Forms.Button();
             this.buttonCancelFilter = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBoxNumberPoints = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumberChannel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -78,7 +80,9 @@
             // 
             this.comboBoxFilterType.FormattingEnabled = true;
             this.comboBoxFilterType.Items.AddRange(new object[] {
-            "Сглаживание по 8 точкам"});
+            "Сглаживание Гаусса",
+            "Сглаживание Блюр",
+            "Сглаживание Блюр без масш."});
             this.comboBoxFilterType.Location = new System.Drawing.Point(16, 51);
             this.comboBoxFilterType.Name = "comboBoxFilterType";
             this.comboBoxFilterType.Size = new System.Drawing.Size(252, 21);
@@ -96,7 +100,7 @@
             // 
             // splitContainer1
             // 
-            this.splitContainer1.Location = new System.Drawing.Point(16, 78);
+            this.splitContainer1.Location = new System.Drawing.Point(16, 108);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -132,11 +136,30 @@
             this.buttonCancelFilter.UseVisualStyleBackColor = true;
             this.buttonCancelFilter.Click += new System.EventHandler(this.buttonCancelFilter_Click);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(16, 79);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(143, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Количетво точек(нечетное)";
+            // 
+            // textBoxNumberPoints
+            // 
+            this.textBoxNumberPoints.Location = new System.Drawing.Point(165, 79);
+            this.textBoxNumberPoints.Name = "textBoxNumberPoints";
+            this.textBoxNumberPoints.Size = new System.Drawing.Size(103, 20);
+            this.textBoxNumberPoints.TabIndex = 6;
+            this.textBoxNumberPoints.Text = "125";
+            // 
             // FormFilterConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(280, 110);
+            this.ClientSize = new System.Drawing.Size(280, 143);
+            this.Controls.Add(this.textBoxNumberPoints);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBoxFilterType);
@@ -165,5 +188,7 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Button buttonOkFilter;
         private System.Windows.Forms.Button buttonCancelFilter;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBoxNumberPoints;
     }
 }

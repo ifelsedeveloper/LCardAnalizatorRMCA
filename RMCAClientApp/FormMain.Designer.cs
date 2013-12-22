@@ -116,11 +116,15 @@
             this.zedGraphControlTimeSpeedAcc = new ZedGraph.ZedGraphControl();
             this.tabPageFilter = new System.Windows.Forms.TabPage();
             this.tableLayoutPanelFilterTop = new System.Windows.Forms.TableLayoutPanel();
-            this.saveFileDialogGraph = new System.Windows.Forms.SaveFileDialog();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.zedGraphControlSource = new ZedGraph.ZedGraphControl();
             this.zedGraphControlFiltered = new ZedGraph.ZedGraphControl();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.zedGraphControlSource = new ZedGraph.ZedGraphControl();
+            this.tabPageDegreeSpeed = new System.Windows.Forms.TabPage();
+            this.zedGraphControlDegreeSpeed = new ZedGraph.ZedGraphControl();
+            this.tabPageDegreeAcc = new System.Windows.Forms.TabPage();
+            this.zedGraphControlDegreeAcc = new ZedGraph.ZedGraphControl();
+            this.saveFileDialogGraph = new System.Windows.Forms.SaveFileDialog();
             this.explorerTreeMain = new WindowsExplorer.ExplorerTree();
             this.menuStrip1.SuspendLayout();
             this.toolStripMainMenu.SuspendLayout();
@@ -147,8 +151,10 @@
             this.tabPageTimeSpeedAcc.SuspendLayout();
             this.tabPageFilter.SuspendLayout();
             this.tableLayoutPanelFilterTop.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.tabPageDegreeSpeed.SuspendLayout();
+            this.tabPageDegreeAcc.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -218,7 +224,7 @@
             this.FilterDataSourceToolStripMenuItem.BackColor = System.Drawing.SystemColors.ControlLight;
             this.FilterDataSourceToolStripMenuItem.Name = "FilterDataSourceToolStripMenuItem";
             this.FilterDataSourceToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
-            this.FilterDataSourceToolStripMenuItem.Text = "Фильрация исходных данных";
+            this.FilterDataSourceToolStripMenuItem.Text = "Фильтрация исходных данных";
             this.FilterDataSourceToolStripMenuItem.Click += new System.EventHandler(this.FilterDataSourceToolStripMenuItem_Click);
             // 
             // ReCalcToolStripMenuItem
@@ -753,6 +759,8 @@
             this.tabControlMain.Controls.Add(this.tabPageReport);
             this.tabControlMain.Controls.Add(this.tabPageTimeSpeedAcc);
             this.tabControlMain.Controls.Add(this.tabPageFilter);
+            this.tabControlMain.Controls.Add(this.tabPageDegreeSpeed);
+            this.tabControlMain.Controls.Add(this.tabPageDegreeAcc);
             this.tabControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlMain.Location = new System.Drawing.Point(0, 0);
             this.tabControlMain.Name = "tabControlMain";
@@ -1062,12 +1070,30 @@
             this.tableLayoutPanelFilterTop.Size = new System.Drawing.Size(1006, 680);
             this.tableLayoutPanelFilterTop.TabIndex = 0;
             // 
-            // saveFileDialogGraph
+            // panel3
             // 
-            this.saveFileDialogGraph.DefaultExt = "bmp";
-            this.saveFileDialogGraph.FileName = "bmp";
-            this.saveFileDialogGraph.Filter = "bmp files|*.bmp";
-            this.saveFileDialogGraph.RestoreDirectory = true;
+            this.panel3.Controls.Add(this.zedGraphControlFiltered);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(3, 343);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(1000, 334);
+            this.panel3.TabIndex = 2;
+            // 
+            // zedGraphControlFiltered
+            // 
+            this.zedGraphControlFiltered.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.zedGraphControlFiltered.Location = new System.Drawing.Point(0, 0);
+            this.zedGraphControlFiltered.Name = "zedGraphControlFiltered";
+            this.zedGraphControlFiltered.ScrollGrace = 0D;
+            this.zedGraphControlFiltered.ScrollMaxX = 0D;
+            this.zedGraphControlFiltered.ScrollMaxY = 0D;
+            this.zedGraphControlFiltered.ScrollMaxY2 = 0D;
+            this.zedGraphControlFiltered.ScrollMinX = 0D;
+            this.zedGraphControlFiltered.ScrollMinY = 0D;
+            this.zedGraphControlFiltered.ScrollMinY2 = 0D;
+            this.zedGraphControlFiltered.Size = new System.Drawing.Size(1000, 334);
+            this.zedGraphControlFiltered.TabIndex = 0;
+            this.zedGraphControlFiltered.ZoomEvent += new ZedGraph.ZedGraphControl.ZoomEventHandler(this.zedGraphControlFiltered_ZoomEvent);
             // 
             // panel2
             // 
@@ -1077,15 +1103,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1000, 334);
             this.panel2.TabIndex = 2;
-            // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.zedGraphControlFiltered);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(3, 343);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1000, 334);
-            this.panel3.TabIndex = 2;
             // 
             // zedGraphControlSource
             // 
@@ -1103,21 +1120,64 @@
             this.zedGraphControlSource.TabIndex = 0;
             this.zedGraphControlSource.ZoomEvent += new ZedGraph.ZedGraphControl.ZoomEventHandler(this.zedGraphControlSource_ZoomEvent);
             // 
-            // zedGraphControlFiltered
+            // tabPageDegreeSpeed
             // 
-            this.zedGraphControlFiltered.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.zedGraphControlFiltered.Location = new System.Drawing.Point(0, 0);
-            this.zedGraphControlFiltered.Name = "zedGraphControlFiltered";
-            this.zedGraphControlFiltered.ScrollGrace = 0D;
-            this.zedGraphControlFiltered.ScrollMaxX = 0D;
-            this.zedGraphControlFiltered.ScrollMaxY = 0D;
-            this.zedGraphControlFiltered.ScrollMaxY2 = 0D;
-            this.zedGraphControlFiltered.ScrollMinX = 0D;
-            this.zedGraphControlFiltered.ScrollMinY = 0D;
-            this.zedGraphControlFiltered.ScrollMinY2 = 0D;
-            this.zedGraphControlFiltered.Size = new System.Drawing.Size(1000, 334);
-            this.zedGraphControlFiltered.TabIndex = 0;
-            this.zedGraphControlFiltered.ZoomEvent += new ZedGraph.ZedGraphControl.ZoomEventHandler(this.zedGraphControlFiltered_ZoomEvent);
+            this.tabPageDegreeSpeed.Controls.Add(this.zedGraphControlDegreeSpeed);
+            this.tabPageDegreeSpeed.Location = new System.Drawing.Point(4, 22);
+            this.tabPageDegreeSpeed.Name = "tabPageDegreeSpeed";
+            this.tabPageDegreeSpeed.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageDegreeSpeed.Size = new System.Drawing.Size(1012, 686);
+            this.tabPageDegreeSpeed.TabIndex = 7;
+            this.tabPageDegreeSpeed.Text = "Угол поворота - частота вращения";
+            this.tabPageDegreeSpeed.UseVisualStyleBackColor = true;
+            // 
+            // zedGraphControlDegreeSpeed
+            // 
+            this.zedGraphControlDegreeSpeed.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.zedGraphControlDegreeSpeed.Location = new System.Drawing.Point(3, 3);
+            this.zedGraphControlDegreeSpeed.Name = "zedGraphControlDegreeSpeed";
+            this.zedGraphControlDegreeSpeed.ScrollGrace = 0D;
+            this.zedGraphControlDegreeSpeed.ScrollMaxX = 0D;
+            this.zedGraphControlDegreeSpeed.ScrollMaxY = 0D;
+            this.zedGraphControlDegreeSpeed.ScrollMaxY2 = 0D;
+            this.zedGraphControlDegreeSpeed.ScrollMinX = 0D;
+            this.zedGraphControlDegreeSpeed.ScrollMinY = 0D;
+            this.zedGraphControlDegreeSpeed.ScrollMinY2 = 0D;
+            this.zedGraphControlDegreeSpeed.Size = new System.Drawing.Size(1006, 680);
+            this.zedGraphControlDegreeSpeed.TabIndex = 0;
+            // 
+            // tabPageDegreeAcc
+            // 
+            this.tabPageDegreeAcc.Controls.Add(this.zedGraphControlDegreeAcc);
+            this.tabPageDegreeAcc.Location = new System.Drawing.Point(4, 22);
+            this.tabPageDegreeAcc.Name = "tabPageDegreeAcc";
+            this.tabPageDegreeAcc.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageDegreeAcc.Size = new System.Drawing.Size(1012, 686);
+            this.tabPageDegreeAcc.TabIndex = 8;
+            this.tabPageDegreeAcc.Text = "Угол поворота - ускорение";
+            this.tabPageDegreeAcc.UseVisualStyleBackColor = true;
+            // 
+            // zedGraphControlDegreeAcc
+            // 
+            this.zedGraphControlDegreeAcc.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.zedGraphControlDegreeAcc.Location = new System.Drawing.Point(3, 3);
+            this.zedGraphControlDegreeAcc.Name = "zedGraphControlDegreeAcc";
+            this.zedGraphControlDegreeAcc.ScrollGrace = 0D;
+            this.zedGraphControlDegreeAcc.ScrollMaxX = 0D;
+            this.zedGraphControlDegreeAcc.ScrollMaxY = 0D;
+            this.zedGraphControlDegreeAcc.ScrollMaxY2 = 0D;
+            this.zedGraphControlDegreeAcc.ScrollMinX = 0D;
+            this.zedGraphControlDegreeAcc.ScrollMinY = 0D;
+            this.zedGraphControlDegreeAcc.ScrollMinY2 = 0D;
+            this.zedGraphControlDegreeAcc.Size = new System.Drawing.Size(1006, 680);
+            this.zedGraphControlDegreeAcc.TabIndex = 0;
+            // 
+            // saveFileDialogGraph
+            // 
+            this.saveFileDialogGraph.DefaultExt = "bmp";
+            this.saveFileDialogGraph.FileName = "bmp";
+            this.saveFileDialogGraph.Filter = "bmp files|*.bmp";
+            this.saveFileDialogGraph.RestoreDirectory = true;
             // 
             // explorerTreeMain
             // 
@@ -1149,7 +1209,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "Програмнный комплекс обработки L-Card данных";
+            this.Text = "Анализатор вращетельного движение";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMain_FormClosed);
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.menuStrip1.ResumeLayout(false);
@@ -1180,8 +1240,10 @@
             this.tabPageTimeSpeedAcc.ResumeLayout(false);
             this.tabPageFilter.ResumeLayout(false);
             this.tableLayoutPanelFilterTop.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.tabPageDegreeSpeed.ResumeLayout(false);
+            this.tabPageDegreeAcc.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1282,6 +1344,10 @@
         private System.Windows.Forms.Panel panel3;
         private ZedGraph.ZedGraphControl zedGraphControlFiltered;
         private ZedGraph.ZedGraphControl zedGraphControlSource;
+        private System.Windows.Forms.TabPage tabPageDegreeSpeed;
+        private ZedGraph.ZedGraphControl zedGraphControlDegreeSpeed;
+        private System.Windows.Forms.TabPage tabPageDegreeAcc;
+        private ZedGraph.ZedGraphControl zedGraphControlDegreeAcc;
     }
 }
 

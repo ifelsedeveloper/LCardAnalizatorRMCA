@@ -100,7 +100,6 @@ namespace WindowsFormsGraphickOpenGL
                     { }
                 }
             }
-
         }
 
 
@@ -462,7 +461,7 @@ namespace WindowsFormsGraphickOpenGL
             //находим значения пъезо датчика
         }
 
-        PointFunc GetValueFunc(double t,double [] x, double [] y)
+        public PointFunc GetValueFunc(double t,double [] x, double [] y)
         {
             PointFunc res = new PointFunc();
             int i;

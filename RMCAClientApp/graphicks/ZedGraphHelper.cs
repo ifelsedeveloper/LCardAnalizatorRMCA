@@ -79,7 +79,7 @@ namespace LCardAnalizator.graphicks
 
                 // !!!
                 // Размер ромбиков
-                myCurveSup.Symbol.Size = 14;
+                myCurveSup.Symbol.Size = 7;
             }
 
             // Set the Titles

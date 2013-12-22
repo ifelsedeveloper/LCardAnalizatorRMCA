@@ -25,6 +25,7 @@ namespace LCardAnalizator
             set {
                 _maxChannels = value;
                 numericUpDownNumberChannel.Maximum = _maxChannels;
+                numericUpDownNumberChannel.Value = _maxChannels;
             }
         }
 
@@ -40,6 +41,21 @@ namespace LCardAnalizator
         {
             get {
                 return Convert.ToInt32(numericUpDownNumberChannel.Value);
+            }
+        }
+
+        public int numberPoints
+        {
+            get {
+                int res = 5;
+                try{
+                   res = Convert.ToInt32(textBoxNumberPoints.Text);
+                }
+                catch
+                {
+
+                }
+                return res;
             }
         }
 

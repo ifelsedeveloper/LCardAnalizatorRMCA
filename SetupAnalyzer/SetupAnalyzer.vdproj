@@ -15,13 +15,61 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_01BBB00CA3334CF0954E821F3E8BF8D1"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_10E3FF14903040CE9C62B4441108C7E4"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_50C6153F603A556E9D7982F04528551B"
+        "MsmKey" = "8:_2CA4B18E68C57A21AA463924DC0DA936"
+        "OwnerKey" = "8:_10E3FF14903040CE9C62B4441108C7E4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_2CA4B18E68C57A21AA463924DC0DA936"
+        "OwnerKey" = "8:_98101B6ED94C7CC8A91CE5279881D187"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_2E9437C1B6D64793AC8F9B779BA9F4C7"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_3422FD1E7F7B00F34CE1CF3A04396869"
+        "OwnerKey" = "8:_10E3FF14903040CE9C62B4441108C7E4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_371752FCCA034054802CC516E2718F84"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_40FD7830870079AB4AE18E891E23BC5F"
+        "OwnerKey" = "8:_10E3FF14903040CE9C62B4441108C7E4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4DF0782FD8134E05A340519A301DEEFA"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_74DE784EBA4FA0D3231951C9633EA682"
         "OwnerKey" = "8:_10E3FF14903040CE9C62B4441108C7E4"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -33,37 +81,25 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_96B60CCD23F03DB3A9F86EB4DE0D646C"
+        "MsmKey" = "8:_9190EE4234B0ED5D0070DCD15BB886CB"
         "OwnerKey" = "8:_10E3FF14903040CE9C62B4441108C7E4"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_A7490BBBF2C661ACDC716881924D6410"
+        "MsmKey" = "8:_98101B6ED94C7CC8A91CE5279881D187"
         "OwnerKey" = "8:_10E3FF14903040CE9C62B4441108C7E4"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_A7490BBBF2C661ACDC716881924D6410"
-        "OwnerKey" = "8:_96B60CCD23F03DB3A9F86EB4DE0D646C"
+        "MsmKey" = "8:_E40F58C6D870440EABAFBE04FAAD1835"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_B014B1CBCA78AEC20EA06BFCF1A04AA5"
-        "OwnerKey" = "8:_10E3FF14903040CE9C62B4441108C7E4"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E9A085002BE94CA27971C9BCAD329911"
-        "OwnerKey" = "8:_10E3FF14903040CE9C62B4441108C7E4"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F3986805ACAF0FAE4462D4D772C082BD"
+        "MsmKey" = "8:_F398908E891A2295C01A8FC18F83CD23"
         "OwnerKey" = "8:_10E3FF14903040CE9C62B4441108C7E4"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -76,37 +112,43 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E9A085002BE94CA27971C9BCAD329911"
+        "OwnerKey" = "8:_9190EE4234B0ED5D0070DCD15BB886CB"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_F3986805ACAF0FAE4462D4D772C082BD"
+        "OwnerKey" = "8:_3422FD1E7F7B00F34CE1CF3A04396869"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_96B60CCD23F03DB3A9F86EB4DE0D646C"
+        "OwnerKey" = "8:_98101B6ED94C7CC8A91CE5279881D187"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A7490BBBF2C661ACDC716881924D6410"
+        "OwnerKey" = "8:_2CA4B18E68C57A21AA463924DC0DA936"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_50C6153F603A556E9D7982F04528551B"
+        "OwnerKey" = "8:_F398908E891A2295C01A8FC18F83CD23"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B014B1CBCA78AEC20EA06BFCF1A04AA5"
+        "OwnerKey" = "8:_74DE784EBA4FA0D3231951C9633EA682"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_40FD7830870079AB4AE18E891E23BC5F"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -214,20 +256,193 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_50C6153F603A556E9D7982F04528551B"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_01BBB00CA3334CF0954E821F3E8BF8D1"
+            {
+            "SourcePath" = "8:..\\RMCAClientApp\\opencv_core245.dll"
+            "TargetName" = "8:opencv_core245.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_7EF6F8AC1C394EE082547D691DC72200"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_2CA4B18E68C57A21AA463924DC0DA936"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Tao.FreeGlut, Version=2.4.0.2, Culture=neutral, PublicKeyToken=6e602a6ad6c0d06d, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Tao.OpenGl, Version=2.1.0.12, Culture=neutral, PublicKeyToken=1ca010269a4501ef, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_50C6153F603A556E9D7982F04528551B"
+                    "_2CA4B18E68C57A21AA463924DC0DA936"
                     {
-                    "Name" = "8:Tao.FreeGlut.dll"
+                    "Name" = "8:Tao.OpenGl.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Tao.FreeGlut.dll"
+            "SourcePath" = "8:Tao.OpenGl.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_7EF6F8AC1C394EE082547D691DC72200"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2E9437C1B6D64793AC8F9B779BA9F4C7"
+            {
+            "SourcePath" = "8:..\\RMCAClientApp\\opencv_imgproc245.dll"
+            "TargetName" = "8:opencv_imgproc245.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_7EF6F8AC1C394EE082547D691DC72200"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3422FD1E7F7B00F34CE1CF3A04396869"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:ZedGraph, Version=5.1.5.28844, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_3422FD1E7F7B00F34CE1CF3A04396869"
+                    {
+                    "Name" = "8:ZedGraph.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:ZedGraph.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_7EF6F8AC1C394EE082547D691DC72200"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_371752FCCA034054802CC516E2718F84"
+            {
+            "SourcePath" = "8:..\\RMCAClientApp\\opencv_core245d.dll"
+            "TargetName" = "8:opencv_core245d.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_7EF6F8AC1C394EE082547D691DC72200"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_40FD7830870079AB4AE18E891E23BC5F"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:WindowsExplorer, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_40FD7830870079AB4AE18E891E23BC5F"
+                    {
+                    "Name" = "8:WindowsExplorer.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:WindowsExplorer.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_7EF6F8AC1C394EE082547D691DC72200"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4DF0782FD8134E05A340519A301DEEFA"
+            {
+            "SourcePath" = "8:..\\RMCAClientApp\\Tao\\lib\\freeglut.dll"
+            "TargetName" = "8:freeglut.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_7EF6F8AC1C394EE082547D691DC72200"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_74DE784EBA4FA0D3231951C9633EA682"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:OpenCvSharp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6adad1e807fea099, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_74DE784EBA4FA0D3231951C9633EA682"
+                    {
+                    "Name" = "8:OpenCvSharp.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:OpenCvSharp.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7EF6F8AC1C394EE082547D691DC72200"
@@ -265,107 +480,14 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_96B60CCD23F03DB3A9F86EB4DE0D646C"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Tao.Platform.Windows, Version=1.0.0.5, Culture=neutral, PublicKeyToken=701104b2da67a104, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_96B60CCD23F03DB3A9F86EB4DE0D646C"
-                    {
-                    "Name" = "8:Tao.Platform.Windows.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Tao.Platform.Windows.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_7EF6F8AC1C394EE082547D691DC72200"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A7490BBBF2C661ACDC716881924D6410"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Tao.OpenGl, Version=2.1.0.12, Culture=neutral, PublicKeyToken=1ca010269a4501ef, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_A7490BBBF2C661ACDC716881924D6410"
-                    {
-                    "Name" = "8:Tao.OpenGl.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Tao.OpenGl.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_7EF6F8AC1C394EE082547D691DC72200"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B014B1CBCA78AEC20EA06BFCF1A04AA5"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WindowsExplorer, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_B014B1CBCA78AEC20EA06BFCF1A04AA5"
-                    {
-                    "Name" = "8:WindowsExplorer.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:WindowsExplorer.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_7EF6F8AC1C394EE082547D691DC72200"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E9A085002BE94CA27971C9BCAD329911"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9190EE4234B0ED5D0070DCD15BB886CB"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:RtfWriter, Version=0.9.1.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_E9A085002BE94CA27971C9BCAD329911"
+                    "_9190EE4234B0ED5D0070DCD15BB886CB"
                     {
                     "Name" = "8:RtfWriter.dll"
                     "Attributes" = "3:512"
@@ -389,20 +511,71 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F3986805ACAF0FAE4462D4D772C082BD"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_98101B6ED94C7CC8A91CE5279881D187"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:ZedGraph, Version=5.1.5.28844, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Tao.Platform.Windows, Version=1.0.0.5, Culture=neutral, PublicKeyToken=701104b2da67a104, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_F3986805ACAF0FAE4462D4D772C082BD"
+                    "_98101B6ED94C7CC8A91CE5279881D187"
                     {
-                    "Name" = "8:ZedGraph.dll"
+                    "Name" = "8:Tao.Platform.Windows.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:ZedGraph.dll"
+            "SourcePath" = "8:Tao.Platform.Windows.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_7EF6F8AC1C394EE082547D691DC72200"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E40F58C6D870440EABAFBE04FAAD1835"
+            {
+            "SourcePath" = "8:..\\RMCAClientApp\\opencv_imgproc245d.dll"
+            "TargetName" = "8:opencv_imgproc245d.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_7EF6F8AC1C394EE082547D691DC72200"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F398908E891A2295C01A8FC18F83CD23"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Tao.FreeGlut, Version=2.4.0.2, Culture=neutral, PublicKeyToken=6e602a6ad6c0d06d, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_F398908E891A2295C01A8FC18F83CD23"
+                    {
+                    "Name" = "8:Tao.FreeGlut.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Tao.FreeGlut.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7EF6F8AC1C394EE082547D691DC72200"
@@ -476,15 +649,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:RMCA"
-        "ProductCode" = "8:{32B0F3B8-3F9F-40E8-9409-9FF110ADBE27}"
-        "PackageCode" = "8:{81596910-0C0E-46D3-8320-FE0B8FB17F92}"
+        "ProductCode" = "8:{BAC51407-CA87-4AED-9BA2-08C55E96FD31}"
+        "PackageCode" = "8:{3F045EBE-3B21-4013-89E8-DAC82BD8A825}"
         "UpgradeCode" = "8:{A13D4B03-BE90-471F-A080-E6B64C6ED9EF}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:FALSE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.2.4"
+        "ProductVersion" = "8:1.5.0"
         "Manufacturer" = "8:NIRT Software"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1026,7 +1199,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_10E3FF14903040CE9C62B4441108C7E4"
             {
-            "SourcePath" = "8:..\\RMCAClientApp\\obj\\x86\\Release\\LCardAnalizator.exe"
+            "SourcePath" = "8:..\\RMCAClientApp\\obj\\x86\\Debug\\LCardAnalizator.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7EF6F8AC1C394EE082547D691DC72200"

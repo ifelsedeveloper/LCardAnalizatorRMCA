@@ -97,6 +97,8 @@ namespace WindowsFormsGraphickOpenGL
             tabControlMain.TabPages.Remove(tabPageReport);
             tabControlMain.TabPages.Remove(tabPageTimeSpeed);
             tabControlMain.TabPages.Remove(tabPageTimeSpeedAcc);
+            tabControlMain.TabPages.Remove(tabPageDegreeSpeed);
+            tabControlMain.TabPages.Remove(tabPageDegreeAcc);
             tabControlMain.TabPages.Remove(tabPageFilter);
         }
 
@@ -770,10 +772,12 @@ namespace WindowsFormsGraphickOpenGL
             par.DefaultCharFormat.Font = times;
             par.Alignment = Align.Left;
             par.DefaultCharFormat.FontSize = 15;
-            par.Text = "Зависимость частоты от времени";
+            
             /// ==========================================================================
             /// Image1: Image speed
             /// ==========================================================================
+            /// 
+            par.Text = "Зависимость частоты вращения от времени";
             System.Drawing.Image imagets = zedGraphControlTimeSpeed.GetImage();
             img = doc.addImage(imagets, ImageFileType.Wmf);
             img.StartNewPage = true;
@@ -784,10 +788,11 @@ namespace WindowsFormsGraphickOpenGL
             par.DefaultCharFormat.Font = times;
             par.Alignment = Align.Left;
             par.DefaultCharFormat.FontSize = 15;
-            par.Text = "Зависимость ускорения от времени";
+            
             /// ==========================================================================
             /// Image2: Image accesseleration
             /// ==========================================================================
+            par.Text = "Зависимость ускорения от времени";
             imagets = zedGraphControlTimeAcceleration.GetImage();
             img = doc.addImage(imagets, ImageFileType.Wmf);
             img.StartNewPage = true;
@@ -799,10 +804,42 @@ namespace WindowsFormsGraphickOpenGL
             par.DefaultCharFormat.Font = times;
             par.Alignment = Align.Left;
             par.DefaultCharFormat.FontSize = 15;
-            par.Text = "Зависимость ускорения от частоты вращения";
+            
+
+            /// ==========================================================================
+            /// Image2.1: Image accesseleration
+            /// ==========================================================================
+            par.Text = "Зависимость частоты вращения от угла поворота";
+            imagets = zedGraphControlDegreeSpeed.GetImage();
+            img = doc.addImage(imagets, ImageFileType.Wmf);
+            img.StartNewPage = true;
+            img.Width = 640;
+            img.Width = 480;
+
+            par = doc.addParagraph();
+            par.DefaultCharFormat.Font = times;
+            par.Alignment = Align.Left;
+            par.DefaultCharFormat.FontSize = 15;
+
+            /// ==========================================================================
+            /// Image2.1: Image accesseleration
+            /// ==========================================================================
+            par.Text = "Зависимость ускорения от угла поворота";
+            imagets = zedGraphControlDegreeAcc.GetImage();
+            img = doc.addImage(imagets, ImageFileType.Wmf);
+            img.StartNewPage = true;
+            img.Width = 640;
+            img.Width = 480;
+
+            par = doc.addParagraph();
+            par.DefaultCharFormat.Font = times;
+            par.Alignment = Align.Left;
+            par.DefaultCharFormat.FontSize = 15;
+
             /// ==========================================================================
             /// Image3: Image speed acc
             /// ==========================================================================
+            par.Text = "Зависимость ускорения от частоты вращения";
             imagets = zedGraphControlSpeedAcceleration.GetImage();
             img = doc.addImage(imagets, ImageFileType.Wmf);
             img.StartNewPage = true;
@@ -965,6 +1002,8 @@ namespace WindowsFormsGraphickOpenGL
                     par.Text = @"Поиск событий осуществлен по минимуму и максимуму.";
                 if (TypeAlgorithmFindingPeriods == 1)
                     par.Text = @"Поиск событий осуществлен с использованием второго канала.";
+                if (TypeAlgorithmFindingPeriods == 2)
+                    par.Text = @"События установлены вручную.";
             }
 
             if (SelectedIndexSmooth == 0)
@@ -1029,7 +1068,8 @@ namespace WindowsFormsGraphickOpenGL
             ZedGraphHelper.CreateGraph(ref zedGraphControlTimeSpeed, ref calc_record.t_vu, "время, сек", ref calc_record.vu, "частота вращения, об/мин", calc_record.kol_vu, "", "");
             ZedGraphHelper.CreateGraph(ref zedGraphControlTimeSpeedAcc, ref calc_record.t_vu, "время, сек", ref calc_record.vu, "частота вращения, об/мин", calc_record.kol_vu, "", "");
             ZedGraphHelper.CreateGraphPercent(ref zedGraphControlTimeSpeedAcc, ref calc_record.t_ac, "время, с", ref calc_record.vu, ref calc_record.ac, "Относительные ед., %", calc_record.kol_ac, "", "");
-
+            ZedGraphHelper.CreateGraph(ref zedGraphControlDegreeSpeed, ref calc_record.degree_vu, "градусы", ref calc_record.vu, "частота вращения, об/мин", calc_record.kol_vu, "", "");
+            ZedGraphHelper.CreateGraph(ref zedGraphControlDegreeAcc, ref calc_record.degree_ac, "градусы", ref calc_record.ac, "ускорение, рад/c^2", calc_record.kol_ac, "", "");
             CreateReport();
             if (tabControlMain.TabPages.Count < 2)
             {
@@ -1037,11 +1077,13 @@ namespace WindowsFormsGraphickOpenGL
                 tabControlMain.TabPages.Add(tabPageTimeAcceleration);
                 tabControlMain.TabPages.Add(tabPageSpeedAcceleration);
                 tabControlMain.TabPages.Add(tabPageTimeSpeedAcc);
+                tabControlMain.TabPages.Add(tabPageDegreeSpeed);
+                tabControlMain.TabPages.Add(tabPageDegreeAcc);
                 tabControlMain.TabPages.Add(tabPageReport);
             }
 
             flag_calc = true;
-            tabControlMain.SelectedIndex = 4;
+            tabControlMain.SelectedTab = tabPageReport;
 
             my_scale = 1;
             cl2d.Zoom_full();
@@ -1764,7 +1806,9 @@ namespace WindowsFormsGraphickOpenGL
         int manualStep;
         int manualStartPoint;
         double[] xPoints;
+        double[] xPointsDegree;
         double[] yPoints;
+        double[] yPointsDegree;
         bool isAddedEvents = false;
         //add events manually
         private void addEventsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1787,18 +1831,30 @@ namespace WindowsFormsGraphickOpenGL
 
                     int numberPoints = Convert.ToInt32((calc_record.front_vu.LongLength - manualStartPoint) / manualStep); 
                     xPoints = new double[numberPoints];
+                    xPointsDegree = new double[numberPoints];
                     yPoints = new double[numberPoints];
+                    yPointsDegree = new double[numberPoints];
 
                     for(int i = 0; i < numberPoints; i++)
                     {
                         xPoints[i] = calc_record.front_vu[manualStartPoint + i * manualStep];
-                        yPoints[i] = 0;
+                        xPointsDegree[i] = manualStartPoint + i * manualStep;
+                        yPointsDegree[i] = yPoints[i] = 0;
+                        if (flag_calc)
+                        {
+                            var point = calc_record.GetValueFunc(xPointsDegree[i], calc_record.degree_vu, calc_record.vu);
+                            yPointsDegree[i] = point.y;
+                        }
                     }
                     cl2d.DrawEvents(xPoints, yPoints, 2);
 
-                    ZedGraphHelper.CreateGraph(ref zedGraphControlSource, ref record.time, "Время, сек", ref record.ch[nChannel - 1], "", record.KadrsNumber,ref xPoints, ref yPoints, "", "График исходных данных");
-                    ZedGraphHelper.CreateGraph(ref zedGraphControlFiltered, ref record.time, "Время, сек", ref filterY, "", record.KadrsNumber,ref xPoints, ref yPoints, "", "График отфильтрованных данных");
-
+                    if (nChannel > 0 && tabControlMain.Contains(tabPageFilter))
+                    {
+                        ZedGraphHelper.CreateGraph(ref zedGraphControlSource, ref record.time, "Время, сек", ref record.ch[nChannel - 1], "", record.KadrsNumber, ref xPoints, ref yPoints, "", "График исходных данных");
+                        ZedGraphHelper.CreateGraph(ref zedGraphControlFiltered, ref record.time, "Время, сек", ref filterY, "", record.KadrsNumber, ref xPoints, ref yPoints, "", "График отфильтрованных данных");
+                    }
+                    ZedGraphHelper.CreateGraph(ref zedGraphControlDegreeSpeed, ref calc_record.degree_vu, "градусы", ref calc_record.vu, "частота вращения, об/мин", calc_record.kol_vu, ref xPointsDegree, ref yPointsDegree, "", "");
+                    ZedGraphHelper.CreateGraph(ref zedGraphControlDegreeAcc, ref calc_record.degree_ac, "градусы", ref calc_record.ac, "ускорение, рад/c^2", calc_record.kol_ac, ref xPointsDegree, ref yPoints, "", "");
                     isAddedEvents = true;
                     OpenGlControlGraph.Invalidate();
                     zedGraphControlFiltered.Invalidate();
@@ -1813,7 +1869,7 @@ namespace WindowsFormsGraphickOpenGL
         FormFilterConfig formFilter = new FormFilterConfig();
         int typeFilter;
         int nChannel;
-        bool flag_filtered = false;
+        int numberPoints;
         void backWorkerFilter_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             this.Invoke(new Action(() => Filter()));
@@ -1843,19 +1899,17 @@ namespace WindowsFormsGraphickOpenGL
                 {
                     typeFilter = formFilter.typeFilter;
                     nChannel = formFilter.numberChannel;
-
+                    numberPoints = formFilter.numberPoints;
                     //calculate filter
-                    filterY = ClassFilter.filterSmooth(record.time, record.ch[nChannel - 1]);
+                    filterY = ClassFilter.filterSmooth(record.time, record.ch[nChannel - 1],numberPoints,typeFilter);
 
                     //create graphics
 
                     tabControlMain.TabPages.Add(tabPageFilter);
                     ZedGraphHelper.CreateGraph(ref zedGraphControlSource, ref record.time, "Время, сек", ref record.ch[nChannel - 1], "", record.KadrsNumber, "", "График исходных данных");
                     ZedGraphHelper.CreateGraph(ref zedGraphControlFiltered, ref record.time, "Время, сек", ref filterY, "", record.KadrsNumber, "", "График отфильтрованных данных");
-                    flag_filtered = true;
+                    tabControlMain.SelectedTab = tabPageFilter;
                 }
-                else
-                    flag_filtered = false;
             }
         }
 
