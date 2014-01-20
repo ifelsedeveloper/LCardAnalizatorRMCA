@@ -444,5 +444,57 @@ namespace LCardAnalizator.graphicks
                 zgc.Invalidate();
             }
         }
+
+        public static void AppendEventsToGraph(ref ZedGraphControl zgc,
+        double[] x,
+        double[] y,
+            string name, SymbolType typeSymbol, System.Drawing.Color color)
+        {
+            if (y != null)
+            {
+                // Получим панель для рисования
+                GraphPane pane = zgc.GraphPane;
+
+                // Создадим список точек
+                PointPairList list = new PointPairList();
+
+                // Заполняем список точек
+                for (int i = 0; i < x.Length; i++)
+                {
+                    list.Add(x[i], y[i]);
+                }
+
+                // !!!
+                // Создадим кривую с названием "Scatter".
+                // Обводка ромбиков будут рисоваться голубым цветом (Color.Blue),
+                // Опорные точки - ромбики (SymbolType.Diamond)
+
+                LineItem myCurve = pane.AddCurve(name, list, color, typeSymbol);
+
+                // !!!
+                // У кривой линия будет невидимой
+                myCurve.Line.IsVisible = false;
+
+                // !!!
+                // Цвет заполнения отметок (ромбиков) - колубой
+                myCurve.Symbol.Fill.Color = color;
+
+                // !!!
+                // Тип заполнения - сплошная заливка
+                myCurve.Symbol.Fill.Type = FillType.None;
+
+                // !!!
+                // Размер ромбиков
+                myCurve.Symbol.Size = 10;
+
+                // Вызываем метод AxisChange (), чтобы обновить данные об осях. 
+                // В противном случае на рисунке будет показана только часть графика, 
+                // которая умещается в интервалы по осям, установленные по умолчанию
+                zgc.AxisChange();
+
+                // Обновляем график
+                zgc.Invalidate();
+            }
+        }
     }
 }

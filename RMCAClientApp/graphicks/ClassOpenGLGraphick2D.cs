@@ -823,7 +823,7 @@ namespace WindowsFormsGraphickOpenGL
                     if (n_chevent == j)
                     {
                         // устанавливаем текущий цвет 
-                        Gl.glColor3f(colors_func[j][0], colors_func[j][1], colors_func[j][2]);
+                        Gl.glColor3f(colors_func[(j + 1) % 4][0], colors_func[(j + 1) % 4][1], colors_func[(j + 1) % 4][2]);
                         Gl.glLineWidth(3);
                         //Gl.glColor3i(0, 100, 0);
                         // активируем режим рисования линий, на основе 

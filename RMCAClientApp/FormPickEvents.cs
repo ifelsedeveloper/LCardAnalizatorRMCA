@@ -26,6 +26,7 @@ namespace LCardAnalizator
                 {
                     step = Convert.ToInt32(textBoxStep.Text);
                     startPoint = Convert.ToInt32(textBoxStartPoint.Text);
+                    diff = Convert.ToInt32(textBoxDiff.Text);
                     this.DialogResult = DialogResult.OK;
                 }
             }
@@ -53,8 +54,14 @@ namespace LCardAnalizator
             get { return startPoint; }
         }
 
-        public int step;
-        public int startPoint;
+        public int DiffPoints
+        {
+            get { return diff; }
+        }
+
+        private int step;
+        private int startPoint;
+        private int diff;
         // Restricts the entry of characters to digits (including hex), the negative sign, 
         // the decimal point, and editing keystrokes (backspace). 
         protected override void OnKeyPress(KeyPressEventArgs e)

@@ -34,6 +34,8 @@
             this.textBoxStep = new System.Windows.Forms.TextBox();
             this.buttonOk = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
+            this.textBoxDiff = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -72,10 +74,11 @@
             this.textBoxStep.Size = new System.Drawing.Size(100, 20);
             this.textBoxStep.TabIndex = 3;
             this.textBoxStep.Text = "720";
+            this.textBoxStep.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxStartPoint_KeyPress);
             // 
             // buttonOk
             // 
-            this.buttonOk.Location = new System.Drawing.Point(9, 59);
+            this.buttonOk.Location = new System.Drawing.Point(9, 85);
             this.buttonOk.Name = "buttonOk";
             this.buttonOk.Size = new System.Drawing.Size(130, 23);
             this.buttonOk.TabIndex = 4;
@@ -85,7 +88,7 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Location = new System.Drawing.Point(145, 59);
+            this.buttonCancel.Location = new System.Drawing.Point(145, 85);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(127, 23);
             this.buttonCancel.TabIndex = 5;
@@ -93,11 +96,32 @@
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
+            // textBoxDiff
+            // 
+            this.textBoxDiff.Location = new System.Drawing.Point(172, 58);
+            this.textBoxDiff.Name = "textBoxDiff";
+            this.textBoxDiff.Size = new System.Drawing.Size(100, 20);
+            this.textBoxDiff.TabIndex = 6;
+            this.textBoxDiff.Text = "100";
+            this.textBoxDiff.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxStartPoint_KeyPress);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.Location = new System.Drawing.Point(5, 58);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(104, 24);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Смещение";
+            // 
             // FormPickEvents
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(281, 90);
+            this.ClientSize = new System.Drawing.Size(281, 116);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.textBoxDiff);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOk);
             this.Controls.Add(this.textBoxStep);
@@ -121,5 +145,7 @@
         private System.Windows.Forms.TextBox textBoxStep;
         private System.Windows.Forms.Button buttonOk;
         private System.Windows.Forms.Button buttonCancel;
+        private System.Windows.Forms.TextBox textBoxDiff;
+        private System.Windows.Forms.Label label3;
     }
 }

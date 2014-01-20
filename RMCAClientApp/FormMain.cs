@@ -755,7 +755,7 @@ namespace WindowsFormsGraphickOpenGL
             /// Don't instantiate RtfTable, RtfParagraph, and RtfImage objects by using
             /// ``new'' keyword. Instead, use add* method in objects derived from 
             /// RtfBlockList class. (See Demos.)
-            RtfTable table;
+            
             RtfParagraph par;
             RtfImage img;
             /// Don't instantiate RtfCharFormat by using ``new'' keyword, either. 
@@ -846,6 +846,7 @@ namespace WindowsFormsGraphickOpenGL
             img.Width = 640;
             img.Width = 480;
 
+            RtfTable table;
             if (calc_record.min_loc != null)
             {
                 par = doc.addParagraph();
@@ -994,9 +995,10 @@ namespace WindowsFormsGraphickOpenGL
                                 table.cell(i, j).addParagraph().Text = Math.Round(calc_record.InEng[(i - 2) * 4 + j / 3 - 2], 2).ToString();
                         }
                     }
+                    table.setInnerBorder(DW.RtfWriter.BorderStyle.Dotted, 1f);
+                    table.setOuterBorder(DW.RtfWriter.BorderStyle.Single, 1f);
                 }
-                table.setInnerBorder(DW.RtfWriter.BorderStyle.Dotted, 1f);
-                table.setOuterBorder(DW.RtfWriter.BorderStyle.Single, 1f);
+                
                 par = doc.addParagraph();
                 if(TypeAlgorithmFindingPeriods == 0)
                     par.Text = @"Поиск событий осуществлен по минимуму и максимуму.";
@@ -1004,6 +1006,74 @@ namespace WindowsFormsGraphickOpenGL
                     par.Text = @"Поиск событий осуществлен с использованием второго канала.";
                 if (TypeAlgorithmFindingPeriods == 2)
                     par.Text = @"События установлены вручную.";
+            }
+
+            if (pointsDiffDegreeX != null)
+            {
+                par = doc.addParagraph();
+                par.DefaultCharFormat.Font = times;
+                par.Alignment = Align.Left;
+                par.DefaultCharFormat.FontSize = 15;
+                par.Text = "Точки смещения";
+
+
+                table = doc.addTable(pointsDiffDegreeX.Length, 4);
+
+                table.Margins[Direction.Bottom] = 20;
+                table.DefaultCharFormat.FontSize = 8;
+                /// Step 3. (Optional) Set text alignment for each cell, row height, column width,
+                ///			border style, etc.
+                /// header 0
+                /// 
+                int[] widths = { 100, 100, 120, 120 };
+
+                table.cell(0, 0).Width = widths[0];
+                table.cell(0, 0).Alignment = Align.Left;
+                table.cell(0, 0).AlignmentVertical = AlignVertical.Middle;
+                table.cell(0, 0).addParagraph().Text = @"Время, с";
+
+                table.cell(0, 1).Width = widths[1];
+                table.cell(0, 1).Alignment = Align.Left;
+                table.cell(0, 1).AlignmentVertical = AlignVertical.Middle;
+                table.cell(0, 1).addParagraph().Text = @"Градусы";
+
+                table.cell(0, 2).Width = widths[2];
+                table.cell(0, 2).Alignment = Align.Left;
+                table.cell(0, 2).AlignmentVertical = AlignVertical.Middle;
+                table.cell(0, 2).addParagraph().Text = @"Частота, об/мин";
+
+                table.cell(0, 3).Width = widths[3];
+                table.cell(0, 3).Alignment = Align.Left;
+                table.cell(0, 3).AlignmentVertical = AlignVertical.Middle;
+                table.cell(0, 3).addParagraph().Text = @"Ускорение, рад/с^2";
+                int i;
+                for (i = 1; i < table.RowCount; i++)
+                {
+                    for (int j = 0; j < table.ColCount; j++)
+                    {
+                        table.cell(i, j).Width = widths[j];
+                        table.cell(i, j).Alignment = Align.Left;
+                        table.cell(i, j).AlignmentVertical = AlignVertical.Middle;
+
+                        switch (j)
+                        {
+                            case 0:
+                                table.cell(i, j).addParagraph().Text = pointsDiffTimeX[i - 1].ToString();
+                                break;
+                            case 1:
+                                table.cell(i, j).addParagraph().Text = pointsDiffDegreeX[i - 1].ToString();
+                                break;
+                            case 2:
+                                table.cell(i, j).addParagraph().Text = pointsDiffTimeYVu[i - 1].ToString();
+                                break;
+                            case 3:
+                                table.cell(i, j).addParagraph().Text = pointsDiffTimeYAc[i - 1].ToString();
+                                break;
+                        }
+                    }
+                }
+                table.setInnerBorder(DW.RtfWriter.BorderStyle.Dotted, 1f);
+                table.setOuterBorder(DW.RtfWriter.BorderStyle.Single, 1f);
             }
 
             if (SelectedIndexSmooth == 0)
@@ -1805,10 +1875,23 @@ namespace WindowsFormsGraphickOpenGL
         FormPickEvents formEvevnts = new FormPickEvents();
         int manualStep;
         int manualStartPoint;
-        double[] xPoints;
-        double[] xPointsDegree;
-        double[] yPoints;
-        double[] yPointsDegree;
+        int diffPoints;
+        //опорные точки
+        double[] pointsX;
+        double[] pointsDegreeX;
+        double[] pointsY;
+        double[] pointsDegreeY;
+        double[] pointsTimeX;
+        double[] pointsTimeYVu;
+        double[] pointsTimeYAc;
+        //точки смещения
+        double[] pointsDiffX;
+        double[] pointsDiffDegreeX;
+        double[] pointsDiffY;
+        double[] pointsDiffDegreeY;
+        double[] pointsDiffTimeX;
+        double[] pointsDiffTimeYVu;
+        double[] pointsDiffTimeYAc;
         bool isAddedEvents = false;
         //add events manually
         private void addEventsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1820,45 +1903,106 @@ namespace WindowsFormsGraphickOpenGL
                 //setup events
                 manualStartPoint = formEvevnts.StartPoint;
                 manualStep = formEvevnts.Step;
-
+                diffPoints = formEvevnts.DiffPoints;
                 //show events
                 if(record!= null && flag_record && flag_graph)
                 {
                     //calculate points
+                        
+
                     if (calc_record == null)
+                    {
                         calc_record = new ClassCalc();
+                    }
                     calc_record.CalculateDegree(record);
 
                     int numberPoints = Convert.ToInt32((calc_record.front_vu.LongLength - manualStartPoint) / manualStep); 
-                    xPoints = new double[numberPoints];
-                    xPointsDegree = new double[numberPoints];
-                    yPoints = new double[numberPoints];
-                    yPointsDegree = new double[numberPoints];
+                    pointsX = new double[numberPoints];
+                    pointsDegreeX = new double[numberPoints];
+                    pointsY = new double[numberPoints];
+                    pointsDegreeY = new double[numberPoints];
+                    pointsTimeX = new double[numberPoints];
+                    pointsTimeYVu = new double[numberPoints];
+                    pointsTimeYAc = new double[numberPoints];
+
+                    int numberPointsDiff = Convert.ToInt32((calc_record.front_vu.LongLength - manualStartPoint - diffPoints) / manualStep);
+                    pointsDiffX = new double[numberPointsDiff];
+                    pointsDiffDegreeX = new double[numberPointsDiff];
+                    pointsDiffY = new double[numberPointsDiff];
+                    pointsDiffDegreeY = new double[numberPointsDiff];
+                    pointsDiffTimeX = new double[numberPointsDiff];
+                    pointsDiffTimeYVu = new double[numberPointsDiff];
+                    pointsDiffTimeYAc = new double[numberPointsDiff];
 
                     for(int i = 0; i < numberPoints; i++)
                     {
-                        xPoints[i] = calc_record.front_vu[manualStartPoint + i * manualStep];
-                        xPointsDegree[i] = manualStartPoint + i * manualStep;
-                        yPointsDegree[i] = yPoints[i] = 0;
+                        pointsX[i] = calc_record.front_vu[manualStartPoint + i * manualStep];
+                        pointsDegreeX[i] = manualStartPoint + i * manualStep;
+                        if (calc_record.t_vu != null)
+                        {
+                            pointsTimeX[i] = calc_record.t_vu[manualStartPoint + i * manualStep];
+                            pointsTimeYVu[i] = calc_record.vu[manualStartPoint + i * manualStep];
+                        }
+
+                        if (calc_record.t_ac != null && calc_record.ac != null)
+                            pointsTimeYAc[i] = calc_record.GetValueFunc(pointsTimeX[i], calc_record.t_ac, calc_record.ac).y;
+                        else
+                            pointsTimeYAc[i] = 0;
+                        pointsDegreeY[i] = pointsY[i] = 0;
                         if (flag_calc)
                         {
-                            var point = calc_record.GetValueFunc(xPointsDegree[i], calc_record.degree_vu, calc_record.vu);
-                            yPointsDegree[i] = point.y;
+                            var point = calc_record.GetValueFunc(pointsDegreeX[i], calc_record.degree_vu, calc_record.vu);
+                            pointsDegreeY[i] = point.y;
                         }
                     }
-                    cl2d.DrawEvents(xPoints, yPoints, 2);
+
+                    for (int i = 0; i < numberPointsDiff; i++)
+                    {
+                        pointsDiffX[i] = calc_record.front_vu[manualStartPoint + i * manualStep + diffPoints];
+                        pointsDiffDegreeX[i] = manualStartPoint + i * manualStep + diffPoints;
+                        if (calc_record.t_vu != null)
+                        {
+                            pointsDiffTimeX[i] = calc_record.t_vu[manualStartPoint + i * manualStep + diffPoints];
+                            pointsDiffTimeYVu[i] = calc_record.vu[manualStartPoint + i * manualStep + diffPoints];
+                        }
+
+                        if (calc_record.t_ac != null && calc_record.ac != null)
+                            pointsDiffTimeYAc[i] = calc_record.GetValueFunc(pointsDiffTimeX[i], calc_record.t_ac, calc_record.ac).y;
+                        else
+                            pointsDiffTimeYAc[i] = 0;
+
+                        pointsDiffDegreeY[i] = pointsDiffY[i] = 0;
+                        if (flag_calc)
+                        {
+                            var point = calc_record.GetValueFunc(pointsDiffDegreeX[i], calc_record.degree_vu, calc_record.vu);
+                            pointsDiffDegreeY[i] = point.y;
+                        }
+                    }
+
+                    cl2d.DrawEvents(pointsX, pointsY, 2);
 
                     if (nChannel > 0 && tabControlMain.Contains(tabPageFilter))
                     {
-                        ZedGraphHelper.CreateGraph(ref zedGraphControlSource, ref record.time, "Время, сек", ref record.ch[nChannel - 1], "", record.KadrsNumber, ref xPoints, ref yPoints, "", "График исходных данных");
-                        ZedGraphHelper.CreateGraph(ref zedGraphControlFiltered, ref record.time, "Время, сек", ref filterY, "", record.KadrsNumber, ref xPoints, ref yPoints, "", "График отфильтрованных данных");
+                        ZedGraphHelper.CreateGraph(ref zedGraphControlSource, ref record.time, "Время, сек", ref record.ch[nChannel - 1], "", record.KadrsNumber, ref pointsX, ref pointsY, "", "График исходных данных");
+                        ZedGraphHelper.CreateGraph(ref zedGraphControlFiltered, ref record.time, "Время, сек", ref filterY, "", record.KadrsNumber, ref pointsX, ref pointsY, "", "График отфильтрованных данных");
                     }
-                    ZedGraphHelper.CreateGraph(ref zedGraphControlDegreeSpeed, ref calc_record.degree_vu, "градусы", ref calc_record.vu, "частота вращения, об/мин", calc_record.kol_vu, ref xPointsDegree, ref yPointsDegree, "", "");
-                    ZedGraphHelper.CreateGraph(ref zedGraphControlDegreeAcc, ref calc_record.degree_ac, "градусы", ref calc_record.ac, "ускорение, рад/c^2", calc_record.kol_ac, ref xPointsDegree, ref yPoints, "", "");
+                    ZedGraphHelper.CreateGraph(ref zedGraphControlDegreeSpeed, ref calc_record.degree_vu, "градусы", ref calc_record.vu, "частота вращения, об/мин", calc_record.kol_vu, ref pointsDegreeX, ref pointsDegreeY, "", "");
+                    ZedGraphHelper.CreateGraph(ref zedGraphControlDegreeAcc, ref calc_record.degree_ac, "градусы", ref calc_record.ac, "ускорение, рад/c^2", calc_record.kol_ac, ref pointsDegreeX, ref pointsY, "", "");
+
+                    ZedGraphHelper.AppendEventsToGraph(ref zedGraphControlTimeSpeed, pointsTimeX, pointsTimeYVu, "Опорные точки", SymbolType.Triangle, System.Drawing.Color.Red);
+                    ZedGraphHelper.AppendEventsToGraph(ref zedGraphControlTimeAcceleration, pointsTimeX, pointsTimeYAc, "Опорные точки", SymbolType.Triangle, System.Drawing.Color.Red);
+
+                    ZedGraphHelper.AppendEventsToGraph(ref zedGraphControlTimeSpeed, pointsDiffTimeX, pointsDiffTimeYVu, "Точки смещения", SymbolType.Diamond, System.Drawing.Color.Green);
+                    ZedGraphHelper.AppendEventsToGraph(ref zedGraphControlTimeAcceleration, pointsDiffTimeX, pointsDiffTimeYAc, "Точки смещения", SymbolType.Diamond, System.Drawing.Color.Green);
+
+                    ZedGraphHelper.AppendEventsToGraph(ref zedGraphControlDegreeSpeed, pointsDiffDegreeX, pointsDiffTimeYVu, "Точки смещения", SymbolType.Diamond, System.Drawing.Color.Green);
+                    ZedGraphHelper.AppendEventsToGraph(ref zedGraphControlDegreeAcc, pointsDiffDegreeX, pointsDiffTimeYAc, "Точки смещения", SymbolType.Diamond, System.Drawing.Color.Green);
+
                     isAddedEvents = true;
                     OpenGlControlGraph.Invalidate();
                     zedGraphControlFiltered.Invalidate();
                     zedGraphControlSource.Invalidate();
+                    CreateReport();
                 }
             }
         }
