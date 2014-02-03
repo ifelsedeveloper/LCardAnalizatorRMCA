@@ -86,7 +86,6 @@
             this.saveFileReportDialog = new System.Windows.Forms.SaveFileDialog();
             this.splitContainerMain = new System.Windows.Forms.SplitContainer();
             this.splitContainerTreeFilePath = new System.Windows.Forms.SplitContainer();
-            this.explorerTreeMain = new WindowsExplorer.ExplorerTree();
             this.dataGridViewFiles = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -126,6 +125,7 @@
             this.tabPageDegreeAcc = new System.Windows.Forms.TabPage();
             this.zedGraphControlDegreeAcc = new ZedGraph.ZedGraphControl();
             this.saveFileDialogGraph = new System.Windows.Forms.SaveFileDialog();
+            this.explorerTreeMain = new WindowsExplorer.ExplorerTree();
             this.menuStrip1.SuspendLayout();
             this.toolStripMainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
@@ -614,13 +614,14 @@
             // toolStripLabelGauss
             // 
             this.toolStripLabelGauss.Name = "toolStripLabelGauss";
-            this.toolStripLabelGauss.Size = new System.Drawing.Size(156, 24);
-            this.toolStripLabelGauss.Text = "Ширина окна сглаживания";
+            this.toolStripLabelGauss.Size = new System.Drawing.Size(232, 24);
+            this.toolStripLabelGauss.Text = "Ширина окна сглаживания(число точек)";
             // 
             // toolStripTextBoxWidthGauss
             // 
             this.toolStripTextBoxWidthGauss.Name = "toolStripTextBoxWidthGauss";
             this.toolStripTextBoxWidthGauss.Size = new System.Drawing.Size(100, 27);
+            this.toolStripTextBoxWidthGauss.Text = "57";
             this.toolStripTextBoxWidthGauss.Leave += new System.EventHandler(this.toolStripTextBoxWidthGauss_Leave);
             this.toolStripTextBoxWidthGauss.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.toolStripTextBoxWidthGauss_KeyPress);
             this.toolStripTextBoxWidthGauss.TextChanged += new System.EventHandler(this.toolStripTextBoxWidthGauss_TextChanged);
@@ -637,7 +638,7 @@
             "Двухпараметрическое сглаживание",
             "Сглаживание Гаусса"});
             this.toolStripComboBoxSmooth.Name = "toolStripComboBoxSmooth";
-            this.toolStripComboBoxSmooth.Size = new System.Drawing.Size(250, 27);
+            this.toolStripComboBoxSmooth.Size = new System.Drawing.Size(250, 23);
             this.toolStripComboBoxSmooth.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxSmooth_SelectedIndexChanged);
             // 
             // toolStripSeparator5
@@ -698,23 +699,6 @@
             this.splitContainerTreeFilePath.Size = new System.Drawing.Size(252, 712);
             this.splitContainerTreeFilePath.SplitterDistance = 422;
             this.splitContainerTreeFilePath.TabIndex = 0;
-            // 
-            // explorerTreeMain
-            // 
-            this.explorerTreeMain.BackColor = System.Drawing.Color.White;
-            this.explorerTreeMain.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.explorerTreeMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.explorerTreeMain.Location = new System.Drawing.Point(0, 0);
-            this.explorerTreeMain.Name = "explorerTreeMain";
-            this.explorerTreeMain.SelectedPath = "C:\\Program Files\\Microsoft Visual Studio 10.0\\Common7\\IDE";
-            this.explorerTreeMain.ShowAddressbar = true;
-            this.explorerTreeMain.ShowMyDocuments = true;
-            this.explorerTreeMain.ShowMyFavorites = true;
-            this.explorerTreeMain.ShowMyNetwork = true;
-            this.explorerTreeMain.ShowToolbar = true;
-            this.explorerTreeMain.Size = new System.Drawing.Size(252, 422);
-            this.explorerTreeMain.TabIndex = 0;
-            this.explorerTreeMain.PathChanged += new WindowsExplorer.ExplorerTree.PathChangedEventHandler(this.explorerTreeMain_PathChanged);
             // 
             // dataGridViewFiles
             // 
@@ -1195,6 +1179,23 @@
             this.saveFileDialogGraph.FileName = "bmp";
             this.saveFileDialogGraph.Filter = "bmp files|*.bmp";
             this.saveFileDialogGraph.RestoreDirectory = true;
+            // 
+            // explorerTreeMain
+            // 
+            this.explorerTreeMain.BackColor = System.Drawing.Color.White;
+            this.explorerTreeMain.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.explorerTreeMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.explorerTreeMain.Location = new System.Drawing.Point(0, 0);
+            this.explorerTreeMain.Name = "explorerTreeMain";
+            this.explorerTreeMain.SelectedPath = "C:\\Program Files\\Microsoft Visual Studio 10.0\\Common7\\IDE";
+            this.explorerTreeMain.ShowAddressbar = true;
+            this.explorerTreeMain.ShowMyDocuments = true;
+            this.explorerTreeMain.ShowMyFavorites = true;
+            this.explorerTreeMain.ShowMyNetwork = true;
+            this.explorerTreeMain.ShowToolbar = true;
+            this.explorerTreeMain.Size = new System.Drawing.Size(252, 422);
+            this.explorerTreeMain.TabIndex = 0;
+            this.explorerTreeMain.PathChanged += new WindowsExplorer.ExplorerTree.PathChangedEventHandler(this.explorerTreeMain_PathChanged);
             // 
             // FormMain
             // 

@@ -277,7 +277,7 @@ namespace WindowsFormsGraphickOpenGL
             width_w = Screen.PrimaryScreen.WorkingArea.Width;
             height_w = Screen.PrimaryScreen.WorkingArea.Height;
             toolStripComboBoxSmooth.SelectedIndex = 0;
-            toolStripTextBoxWidthGauss.Text = "0.02";
+            toolStripTextBoxWidthGauss.Text = "57";
             this.Size = new System.Drawing.Size(width_w, height_w);
             MakeVisibelGaussSmooth(false);
             MakeVisibel2ParamSmooth(true);

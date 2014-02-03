@@ -5,6 +5,7 @@ using System.Text;
 using Record;
 using System.IO;
 using System.Drawing;
+using LCardAnalizator.calculation;
 
 namespace WindowsFormsGraphickOpenGL
 {
@@ -197,29 +198,33 @@ namespace WindowsFormsGraphickOpenGL
                 t_vu[i]=(front_vu[i + 1] + front_vu[i])/2.0;
                 degree_vu[i] = i + 0.5;
             }
-            double sum_numerator, sum_denumerator;
-            double val;
-            int j;
+            //double sum_numerator, sum_denumerator;
+            //double val;
+            //int j;
             vu = new double[kol_vu];
-            if (Math.Abs(in_gaussB) > 1e-10)
-                for (i = 0; i < kol_vu; i++)
-                {
-                    sum_numerator = sum_denumerator = 0;
-                    for (j = 0; j < kol_vu; j++)
-                    {
-                        val = gaussK((t_vu[i] - t_vu[j]) / in_gaussB);
-                        sum_numerator += val * data_vu[j];
-                        sum_denumerator += val;
-                    }
-                    vu[i] = sum_numerator / sum_denumerator;
-                }
+            if(Math.Abs(in_gaussB) > 1)
+                vu = ClassFilter.SmoothGauss(t_vu, data_vu, Convert.ToInt32(Math.Abs(in_gaussB)));
             else
-            {
-                for (i = 0; i < kol_vu; i++)
-                {
-                    vu[i] = data_vu[i];
-                }
-            }
+                vu = ClassFilter.SmoothGauss(t_vu, data_vu, 3);
+            //if (Math.Abs(in_gaussB) > 1e-10)
+            //    for (i = 0; i < kol_vu; i++)
+            //    {
+            //        sum_numerator = sum_denumerator = 0;
+            //        for (j = 0; j < kol_vu; j++)
+            //        {
+            //            val = gaussK((t_vu[i] - t_vu[j]) / in_gaussB);
+            //            sum_numerator += val * data_vu[j];
+            //            sum_denumerator += val;
+            //        }
+            //        vu[i] = sum_numerator / sum_denumerator;
+            //    }
+            //else
+            //{
+            //    for (i = 0; i < kol_vu; i++)
+            //    {
+            //        vu[i] = data_vu[i];
+            //    }
+            //}
         }
 
         void GetAcceleration()

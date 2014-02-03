@@ -31,7 +31,7 @@ namespace LCardAnalizator.calculation
             for (int i = 0; i < y.Length; i++)
                 Mat.DataArrayDouble[i] = Math.Abs(y[i]);
             if(typeFilter == 0)
-                Cv.Smooth(Mat, Mat, SmoothType.Gaussian,numberPoints);
+                Cv.Smooth(Mat, Mat, SmoothType.Gaussian, numberPoints, numberPoints);
             if (typeFilter == 1)
                 Cv.Smooth(Mat, Mat, SmoothType.Blur, numberPoints);
             if (typeFilter == 2)
@@ -39,6 +39,20 @@ namespace LCardAnalizator.calculation
             for (int i = 0; i < y.Length; i++)
                 res[i] = Mat.DataArrayDouble[i];
 
+            return res;
+        }
+
+        public static double[] SmoothGauss(double[] x, double[] y, int numberPoints)
+        {
+
+            double[] res = new double[y.LongLength];
+            CvMat Mat = new CvMat(1, y.Length, MatrixType.F64C1);
+            CvMat MatRes = new CvMat(1, y.Length, MatrixType.F64C1);
+            for (int i = 0; i < y.Length; i++)
+                Mat.DataArrayDouble[i] = Math.Abs(y[i]);
+            Cv.Smooth(Mat, MatRes, SmoothType.Gaussian, 57,57);
+            for (int i = 0; i < y.Length; i++)
+                res[i] = MatRes.DataArrayDouble[i];
             return res;
         }
     }
