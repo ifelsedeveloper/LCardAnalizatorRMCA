@@ -649,15 +649,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:RMCA"
-        "ProductCode" = "8:{13CAA4F4-0E03-43C8-8F18-095D4B9CBE30}"
-        "PackageCode" = "8:{5F30AE58-5660-466B-9C7A-3D2C0C20C2A7}"
+        "ProductCode" = "8:{E47E4919-8845-4563-89F1-AF01A952E6F3}"
+        "PackageCode" = "8:{160398A6-133F-4FC3-8756-7EABD1D75005}"
         "UpgradeCode" = "8:{A13D4B03-BE90-471F-A080-E6B64C6ED9EF}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:FALSE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.6.0"
+        "ProductVersion" = "8:1.8.0"
         "Manufacturer" = "8:NIRT Software"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1199,7 +1199,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_10E3FF14903040CE9C62B4441108C7E4"
             {
-            "SourcePath" = "8:..\\RMCAClientApp\\obj\\x86\\Debug\\LCardAnalizator.exe"
+            "SourcePath" = "8:..\\RMCAClientApp\\obj\\x86\\Release\\LCardAnalizator.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7EF6F8AC1C394EE082547D691DC72200"

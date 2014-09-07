@@ -110,47 +110,48 @@
     <Compile Include="calculation\KIXFilter.cs" />
     <Compile Include="calculation\PointFunc.cs" />
     <Compile Include="calculation\TypeAlgorithmFindingPeriods.cs" />
-    <Compile Include="FormFilterConfig.cs">
+    <Compile Include="forms\dialogs\FormFilterConfig.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormFilterConfig.Designer.cs">
+    <Compile Include="forms\dialogs\FormFilterConfig.Designer.cs">
       <DependentUpon>FormFilterConfig.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormPickEvents.cs">
+    <Compile Include="forms\dialogs\FormPickEvents.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormPickEvents.Designer.cs">
+    <Compile Include="forms\dialogs\FormPickEvents.Designer.cs">
       <DependentUpon>FormPickEvents.cs</DependentUpon>
     </Compile>
-    <Compile Include="graphicks\ZedGraphHelper.cs" />
-    <Compile Include="statesWork.cs" />
+    <Compile Include="forms\reports\graphicks\StylePoint.cs" />
+    <Compile Include="forms\reports\graphicks\ZedGraphHelper.cs" />
+    <Compile Include="forms\reports\statesWork.cs" />
     <Compile Include="calculation\ClassCalc.cs" />
-    <Compile Include="graphicks\ClassOpenGLGraphick2D.cs" />
+    <Compile Include="forms\reports\graphicks\ClassOpenGLGraphick2D.cs" />
     <Compile Include="calculation\ClassRecord.cs" />
-    <Compile Include="FormMain.cs">
+    <Compile Include="forms\FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormMain.Designer.cs">
+    <Compile Include="forms\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormProgressBar.cs">
+    <Compile Include="forms\dialogs\FormProgressBar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormProgressBar.Designer.cs">
+    <Compile Include="forms\dialogs\FormProgressBar.Designer.cs">
       <DependentUpon>FormProgressBar.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FormFilterConfig.resx">
+    <EmbeddedResource Include="forms\dialogs\FormFilterConfig.resx">
       <DependentUpon>FormFilterConfig.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormMain.resx">
+    <EmbeddedResource Include="forms\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormPickEvents.resx">
+    <EmbeddedResource Include="forms\dialogs\FormPickEvents.resx">
       <DependentUpon>FormPickEvents.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormProgressBar.resx">
+    <EmbeddedResource Include="forms\dialogs\FormProgressBar.resx">
       <DependentUpon>FormProgressBar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -189,15 +190,15 @@
     <Content Include="freeglut.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\chart.png" />
-    <Content Include="images\minus.png" />
-    <Content Include="images\play.png" />
-    <Content Include="images\plus.png" />
-    <Content Include="images\refresh.png" />
-    <Content Include="images\save.png" />
-    <Content Include="images\zoom.png" />
-    <Content Include="images\zoom_in.png" />
-    <Content Include="images\zoom_out.png" />
+    <Content Include="forms\reports\graphicks\images\chart.png" />
+    <Content Include="forms\reports\graphicks\images\minus.png" />
+    <Content Include="forms\reports\graphicks\images\play.png" />
+    <Content Include="forms\reports\graphicks\images\plus.png" />
+    <Content Include="forms\reports\graphicks\images\refresh.png" />
+    <Content Include="forms\reports\graphicks\images\save.png" />
+    <Content Include="forms\reports\graphicks\images\zoom.png" />
+    <Content Include="forms\reports\graphicks\images\zoom_in.png" />
+    <Content Include="forms\reports\graphicks\images\zoom_out.png" />
     <Content Include="opencv_core245.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -390,6 +391,9 @@
       <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="libs\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

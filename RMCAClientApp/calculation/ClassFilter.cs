@@ -50,7 +50,7 @@ namespace LCardAnalizator.calculation
             CvMat MatRes = new CvMat(1, y.Length, MatrixType.F64C1);
             for (int i = 0; i < y.Length; i++)
                 Mat.DataArrayDouble[i] = Math.Abs(y[i]);
-            Cv.Smooth(Mat, MatRes, SmoothType.Gaussian, 57,57);
+            Cv.Smooth(Mat, MatRes, SmoothType.Gaussian, numberPoints, numberPoints);
             for (int i = 0; i < y.Length; i++)
                 res[i] = MatRes.DataArrayDouble[i];
             return res;
